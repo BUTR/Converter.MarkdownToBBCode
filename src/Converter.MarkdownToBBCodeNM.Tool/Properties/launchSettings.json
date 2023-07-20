@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Converter.MarkdownToBBCodeNM.Tool": {
+      "commandName": "Project",
+      "commandLineArgs": "-i \"~~raw\r\nmarkdown~~\" --disableextended",
+      "environmentVariables": {
+        
+      }
+    }
+  }
+}
