@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{551089DF-6840-4022-92AE-C338A1718742}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter.MarkdownToBBCodeNM", "Converter.MarkdownToBBCodeNM\Converter.MarkdownToBBCodeNM.csproj", "{291740BE-E1E9-46A0-B6BA-CC3F778F5172}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter.MarkdownToBBCodeNM.Tool", "Converter.MarkdownToBBCodeNM.Tool\Converter.MarkdownToBBCodeNM.Tool.csproj", "{505C9A13-B1C1-4413-8C0C-B6A0690258F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter.MarkdownToBBCodeNM.Tests", "Converter.MarkdownToBBCodeNM.Tests\Converter.MarkdownToBBCodeNM.Tests.csproj", "{0F75F4F4-A0FA-4DFB-9B9D-4E3BED793E62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{E863FBE9-1540-4892-B530-8301A5E3B64B}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+		..\.github\dependabot.yml = ..\.github\dependabot.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{9F59EFEF-B2A9-44C0-9AB1-D52B42087461}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\dotnet-format-daily.yml = ..\.github\workflows\dotnet-format-daily.yml
+		..\.github\workflows\publish.yml = ..\.github\workflows\publish.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{291740BE-E1E9-46A0-B6BA-CC3F778F5172} = {551089DF-6840-4022-92AE-C338A1718742}
+		{505C9A13-B1C1-4413-8C0C-B6A0690258F1} = {551089DF-6840-4022-92AE-C338A1718742}
+		{0F75F4F4-A0FA-4DFB-9B9D-4E3BED793E62} = {551089DF-6840-4022-92AE-C338A1718742}
+		{551089DF-6840-4022-92AE-C338A1718742} = {E863FBE9-1540-4892-B530-8301A5E3B64B}
+		{9F59EFEF-B2A9-44C0-9AB1-D52B42087461} = {E863FBE9-1540-4892-B530-8301A5E3B64B}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{291740BE-E1E9-46A0-B6BA-CC3F778F5172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{291740BE-E1E9-46A0-B6BA-CC3F778F5172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{291740BE-E1E9-46A0-B6BA-CC3F778F5172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{291740BE-E1E9-46A0-B6BA-CC3F778F5172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505C9A13-B1C1-4413-8C0C-B6A0690258F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505C9A13-B1C1-4413-8C0C-B6A0690258F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505C9A13-B1C1-4413-8C0C-B6A0690258F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505C9A13-B1C1-4413-8C0C-B6A0690258F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F75F4F4-A0FA-4DFB-9B9D-4E3BED793E62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F75F4F4-A0FA-4DFB-9B9D-4E3BED793E62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F75F4F4-A0FA-4DFB-9B9D-4E3BED793E62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F75F4F4-A0FA-4DFB-9B9D-4E3BED793E62}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,38 @@
+name: Publish
+
+on:
+  push:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+  
+      - name: Setup .NET 7
+        uses: actions/setup-dotnet@master
+        with:
+          dotnet-version: 7.0.x
+            
+      - name: Build
+        run: dotnet pack src/Converter.MarkdownToBBCodeNM.Tool/Converter.MarkdownToBBCodeNM.Tool.csproj --configuration Release -o ./packages;
+        shell: pwsh
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: packages
+          path: ./packages/
+
+      - name: Push to NuGet
+        if: github.ref == 'refs/heads/master'
+        run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://www.nuget.org
+        shell: pwsh
+  
+      - name: Push to GPR
+        if: github.ref == 'refs/heads/master'
+        run: |
+          for f in ./packages/*.nupkg
+          do
+            curl -vX PUT -u "vslee:${{secrets.GITHUB_TOKEN}}" -F package=@$f https://nuget.pkg.github.com/BUTR/
+          done
