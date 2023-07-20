@@ -2,6 +2,11 @@ name: Publish
 
 on:
   push:
+    branches: master
+    paths:
+      - '.github/workflows/publish.yml'
+      - '**.cs'
+      - '**.csproj'
 
 jobs:
   publish:
