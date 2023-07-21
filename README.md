@@ -24,3 +24,33 @@ and will disable HTML conversion
 ## Usage
 markdown_to_bbcodenm -i "**rawcode**";
 markdown_to_bbcodenm -i "/markdown.md";
+
+## Supporting Codes
+
+| BBCode                                 | Markdown                                                                     | Implementation|
+| -------------------------------------- | ---------------------------------------------------------------------------- | ------------- |
+| [b]TEXT[/b]                            | \*\*TEXT\*\*                                                                 | Markdown      |
+| [i]TEXT[/i]                            | \*TEXT\*                                                                     | Markdown      |
+| [u]TEXT[/u]                            | \<ins\>TEXT\<\/ins\> OR \<u\>TEXT\<\/u\>                                     | HTML          |
+| [s]TEXT[/s]                            | TEXT                                                                         | HTML          |
+| [url=URL]TEXT[/url]                    | \[TEXT\]\(URL\)                                                              | Markdown      |
+| [img]URL[/img]                         | \!\[Alt text\]\(URL\)                                                        | Markdown      |
+| [quote]TEXT[/quote]                    | \> TEXT                                                                      | Markdown      |
+| [quote AUTHOR]TEXT[/quote]             | \> TEXT                                                                      | Markdown      |
+| [code]CODE[/code]                      | \`\`\`CODE\`\`\`                                                             | Markdown      |
+| [list=1][*]ENTRY[/list]                | 1. ENTRY                                                                     | Markdown      |
+| [list][*]ENTRY[/list]                  | \* ENTRY                                                                     | Markdown      |
+| [line]                                 | \<hr\/\>                                                                     | HTML          |
+| [color=COLOR]TEXT[/color]              |                                                                              | Not Possible  |
+| [font=FONT]TEXT[/font]                 |                                                                              | Not Possible  |
+| [center]TEXT[/center]                  | \<p aling=\"center\"\>TEXT\<\/p\>                                            | HTML          |
+| [right]TEXT[/right]                    | \<p aling=\"right\"\>TEXT\<\/p\>                                             | HTML          |
+| [left]TEXT[/left]                      | \<p aling=\"left\"\>TEXT\<\/p\>                                              | HTML          |
+| [size=1]TEXT[/size]                    | ###### TEXT                                                                  | Markdown      |
+| [size=2]TEXT[/size]                    | ##### TEXT                                                                   | Markdown      |
+| [size=3]TEXT[/size]                    | #### TEXT                                                                    | Markdown      |
+| [size=4]TEXT[/size]                    | ### TEXT                                                                     | Markdown      |
+| [size=5]TEXT[/size]                    | ## TEXT                                                                      | Markdown      |
+| [size=6]TEXT[/size]                    | # TEXT                                                                       | Markdown      |
+| [spoiler]TEXT[/spoiler]                | \<details\>\<summary\>Spoiler\<\/summary\>TEXT\<\/details\>                  | HTML          |
+| [youtube]ID[/youtube]                  | [https://www.youtube.com/watch?v=ID](https://www.youtube.com/watch?v=ID\)    | Markdown      |
