@@ -130,17 +130,24 @@ file static class HtmlUtils
     {
         if (node.Name == "p" && node.Attributes["align"] is { Value: { } pAlign })
         {
-            WriteTag(renderer, isInline, false, pAlign, RemoveOneTabulationLevel(node.InnerHtml));
+            WriteTag(renderer, isInline, true, false, pAlign, RemoveOneTabulationLevel(node.InnerHtml));
             return true;
         }
         if (node.Name == "img" && node.Attributes["src"] is { Value: { } impSrc })
         {
-            WriteTag(renderer, isInline, false, "img", impSrc);
+            WriteTag(renderer, isInline, true, false, "img", impSrc);
             return true;
         }
         if (node.Name == "ins" || node.Name == "u")
         {
-            WriteTag(renderer, isInline, false, "u", RemoveOneTabulationLevel(node.InnerHtml));
+            WriteTag(renderer, isInline, true, false, "u", RemoveOneTabulationLevel(node.InnerHtml));
+            return true;
+        }
+        if (node.Name == "hr")
+        {
+            renderer.EnsureLine();
+            WriteTag(renderer, isInline, false, false, "line", RemoveOneTabulationLevel(node.InnerHtml));
+            renderer.EnsureLine();
             return true;
         }
         if (node.Name == "details")
@@ -148,20 +155,20 @@ file static class HtmlUtils
             if (node.ChildNodes.FirstOrDefault(x => x.Name == "summary") is { } summary)
                 node.RemoveChild(summary);
 
-            WriteTag(renderer, isInline, true, "spoiler", RemoveOneTabulationLevel(node.InnerHtml));
+            WriteTag(renderer, isInline, true, true, "spoiler", RemoveOneTabulationLevel(node.InnerHtml));
             return true;
         }
 
         return false;
     }
 
-    private static void WriteTag(NexusModsRenderer renderer, bool isInline, bool forceNewLine, ReadOnlySpan<char> tag, ReadOnlySpan<char> content)
+    private static void WriteTag(NexusModsRenderer renderer, bool isInline, bool closeTag, bool forceNewLine, ReadOnlySpan<char> tag, ReadOnlySpan<char> content)
     {
         if (isInline)
         {
             renderer.Write($"[{tag}]");
             renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.ToString(), false, false, renderer));
-            renderer.Write($"[/{tag}]");
+            if (closeTag) renderer.Write($"[/{tag}]");
         }
         else
         {
@@ -170,7 +177,7 @@ file static class HtmlUtils
             if (content.StartsWith(NewLine)) renderer.EnsureLine();
             renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.ToString(), false, forceNewLine, renderer));
             if (content.EndsWith(NewLine)) renderer.EnsureLine();
-            renderer.Write($"[/{tag}]");
+            if (closeTag) renderer.Write($"[/{tag}]");
             if (renderer.HTMLForceNewLine || !renderer.IsLastInContainer) renderer.EnsureLine();
         }
     }

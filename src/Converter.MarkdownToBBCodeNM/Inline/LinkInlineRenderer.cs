@@ -14,6 +14,15 @@ public class LinkInlineRenderer : NexusModsObjectRenderer<LinkInline>
         }
         else
         {
+            const string youtube = "https://www.youtube.com/watch?v=";
+            if (url.StartsWith(youtube))
+            {
+                renderer.Write($"[youtube]");
+                renderer.Write(url.Substring(youtube.Length));
+                renderer.Write("[/youtube]");
+                return;
+            }
+
             renderer.Write($"[url={url}]");
             renderer.WriteChildren(link);
             renderer.Write("[/url]");

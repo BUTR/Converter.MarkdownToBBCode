@@ -192,4 +192,21 @@ You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount 
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }
+
+
+    [Test]
+    public void Converts_HTML_Line()
+    {
+        const string markdown = """
+sfsdf
+<hr/>
+sdf
+""";
+        const string bbCode = """
+sfsdf
+[line]
+sdf
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
 }
