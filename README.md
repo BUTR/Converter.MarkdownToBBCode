@@ -27,7 +27,7 @@ and will disable HTML conversion
 | [b]TEXT[/b]                            | \*\*TEXT\*\*                                                                 | Markdown      |
 | [i]TEXT[/i]                            | \*TEXT\*                                                                     | Markdown      |
 | [u]TEXT[/u]                            | \<ins\>TEXT\<\/ins\> OR \<u\>TEXT\<\/u\>                                     | HTML          |
-| [s]TEXT[/s]                            | \~\~TEXT\~\~                                                                 | HTML          |
+| [s]TEXT[/s]                            | \~\~TEXT\~\~                                                                 | Markdown      |
 | [url=URL]TEXT[/url]                    | \[TEXT\]\(URL\)                                                              | Markdown      |
 | [img]URL[/img]                         | \!\[Alt text\]\(URL\)                                                        | Markdown      |
 | [quote]TEXT[/quote]                    | \> TEXT                                                                      | Markdown      |
