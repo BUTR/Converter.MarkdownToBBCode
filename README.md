@@ -21,12 +21,7 @@ converted BBCode to the file instead of outputting to the console.
 `-d or --disableextended` will disable newline detection via two spaces
 and will disable HTML conversion
 
-## Usage
-markdown_to_bbcodenm -i "**rawcode**";
-markdown_to_bbcodenm -i "/markdown.md";
-
 ## Supporting Codes
-
 | BBCode                                 | Markdown                                                                     | Implementation|
 | -------------------------------------- | ---------------------------------------------------------------------------- | ------------- |
 | [b]TEXT[/b]                            | \*\*TEXT\*\*                                                                 | Markdown      |
