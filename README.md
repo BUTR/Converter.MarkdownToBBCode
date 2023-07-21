@@ -38,9 +38,9 @@ and will disable HTML conversion
 | [line]                                 | \<hr\/\>                                                                     | HTML          |
 | [color=COLOR]TEXT[/color]              |                                                                              | Not Possible  |
 | [font=FONT]TEXT[/font]                 |                                                                              | Not Possible  |
-| [center]TEXT[/center]                  | \<p aling=\"center\"\>TEXT\<\/p\>                                            | HTML          |
-| [right]TEXT[/right]                    | \<p aling=\"right\"\>TEXT\<\/p\>                                             | HTML          |
-| [left]TEXT[/left]                      | \<p aling=\"left\"\>TEXT\<\/p\>                                              | HTML          |
+| [center]TEXT[/center]                  | \<p align=\"center\"\>TEXT\<\/p\>                                            | HTML          |
+| [right]TEXT[/right]                    | \<p align=\"right\"\>TEXT\<\/p\>                                             | HTML          |
+| [left]TEXT[/left]                      | \<p align=\"left\"\>TEXT\<\/p\>                                              | HTML          |
 | [size=1]TEXT[/size]                    | ###### TEXT                                                                  | Markdown      |
 | [size=2]TEXT[/size]                    | ##### TEXT                                                                   | Markdown      |
 | [size=3]TEXT[/size]                    | #### TEXT                                                                    | Markdown      |
