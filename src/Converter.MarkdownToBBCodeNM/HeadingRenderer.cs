@@ -7,7 +7,7 @@ public class HeadingRenderer : NexusModsObjectRenderer<HeadingBlock>
     protected override void Write(NexusModsRenderer renderer, HeadingBlock obj)
     {
         if (!renderer.IsFirstInContainer) renderer.EnsureLine();
-        renderer.Write($"[size={obj.Level}]");
+        renderer.Write($"[size={7 - obj.Level}]");
         renderer.WriteLeafInline(obj);
         renderer.Write("[/size]");
         if (!renderer.IsLastInContainer) renderer.EnsureLine();

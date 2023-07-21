@@ -7,13 +7,13 @@ public class TestsParagraph
     [Test]
     public void Converts_TestsParagraph()
     {
-        var markdown = $"""
+        const string markdown = $"""
 This is not
 one line
 
 This is one line
 """;
-        var bbCode = """
+        const string bbCode = """
 This is not
 one line
 This is one line
@@ -24,7 +24,7 @@ This is one line
     [Test]
     public void Converts_TestsParagraph_LineBreak()
     {
-        var markdown = $"""
+        const string markdown = $"""
 This is
 one line
 
@@ -33,7 +33,7 @@ one line
 
 This is one line
 """;
-        var bbCode = """
+        const string bbCode = """
 This is one line
 This is not
 one line

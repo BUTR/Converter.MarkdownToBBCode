@@ -10,6 +10,7 @@ namespace Converter.MarkdownToBBCodeNM;
 public class NexusModsRenderer : TextRendererBase<NexusModsRenderer>
 {
     internal MarkdownPipeline Pipeline { get; set; }
+    internal bool HTMLForceNewLine{ get; set; }
 
     public bool DoubleLineBreakAsNewLine { get; set; }
     public bool HandleHTML { get; set; }

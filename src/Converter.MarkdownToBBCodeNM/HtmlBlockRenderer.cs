@@ -1,4 +1,6 @@
-﻿using Markdig.Helpers;
+﻿using HtmlAgilityPack;
+
+using Markdig.Helpers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 
@@ -29,11 +31,15 @@ public class HtmlInlineRenderer : NexusModsObjectRenderer<HtmlInline>
         } while (true);
     }
 
+    // TODO: this one is still shite
     protected override void Write(NexusModsRenderer renderer, HtmlInline obj)
     {
+        if (obj.Tag.StartsWith("</")) return;
+
         var current = obj.NextSibling;
         if (obj.NextSibling is null) return;
         var matching = MatchingTagByNext(obj, obj.NextSibling);
+        if (matching is null) return;
 
         var sb = new StringBuilder();
         sb.Append(obj.Tag);
@@ -51,7 +57,7 @@ public class HtmlInlineRenderer : NexusModsObjectRenderer<HtmlInline>
             current = current.NextSibling;
         }
         sb.Append(matching.Tag);
-        list.Add(current);
+        list.Add(matching);
         foreach (var x in list.Skip(1))
         {
             x.Remove();
@@ -82,44 +88,23 @@ file static class HtmlUtils
 {
     public static string NewLine => Environment.NewLine;
 
-    private const string AlignStart = "<p align=";
-    private const string InsStart = "<ins";
-    private const string UStart = "<u";
-    private const string SpoilerStart = "<details";
+    private static string RemoveOneTabulationLevel(string html)
+    {
+        var lines = html.Split(NewLine);
+        var firstEntry = lines.FirstOrDefault(x => x.Any(c => !char.IsWhiteSpace(c)));
+        if (firstEntry is null) return html;
+        var idx = firstEntry.Select((x, i) => (x, i)).FirstOrDefault(t => !char.IsWhiteSpace(t.x)).i;
+        var tabulation = firstEntry.Substring(0, idx);
+        return string.Join(NewLine, html.Split(NewLine).Select(x => x.StartsWith(tabulation) ? x.Substring(tabulation.Length) : x));
+    }
 
     public static void ProcessInline(NexusModsRenderer renderer, string html)
     {
         if (html.Length == 0) return;
 
-        var span = html.AsSpan();
-        var contentStart = span.IndexOf('>') + 1;
-        var contentLength = span.Slice(contentStart).LastIndexOf("</");
-        var content = span.Slice(contentStart, contentLength == -1 ? span.Length : contentLength);
-
-        var alignValue = GetAlign(html);
-        if (!alignValue.IsEmpty)
-        {
-            WriteTag(renderer, true, alignValue, content);
-            return;
-        }
-
-        if (IsUnderscore(html))
-        {
-            WriteTag(renderer, true, "u", content);
-            return;
-        }
-
-        if (IsSpoiler(html))
-        {
-            const string summaryEnd = "</summary>";
-            var idxEnd = content.IndexOf(summaryEnd);
-
-            // Don't handle markdown's line breaks
-            WriteTag(renderer, true, "spoiler", content.Slice(idxEnd + summaryEnd.Length).TrimStart(NewLine));
-            return;
-        }
-
-        renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.ToString(), false, renderer));
+        var document = new HtmlDocument();
+        document.LoadHtml(html);
+        HandleHTML(renderer, document, true);
     }
 
     public static void Process(NexusModsRenderer renderer, in StringLineGroup group)
@@ -128,91 +113,65 @@ file static class HtmlUtils
 
         var isInline = group.Lines.Length == 1 || group.Lines[1].Slice.AsSpan().IsEmpty;
 
-        var span = isInline ? group.Lines[0].Slice.AsSpan() : group.ToSlice().AsSpan();
-        var contentStart = span.IndexOf('>') + 1;
-        var contentLength = span.Slice(contentStart).LastIndexOf("</");
-        var content = span.Slice(contentStart, contentLength == -1 ? span.Length : contentLength);
-
-        var alignValue = GetAlign(group.Lines);
-        if (!alignValue.IsEmpty)
-        {
-            WriteTag(renderer, isInline, alignValue, content);
-            return;
-        }
-
-        if (IsUnderscore(group.Lines))
-        {
-            WriteTag(renderer, isInline, "u", content);
-            return;
-        }
-
-        if (IsSpoiler(group.Lines))
-        {
-            const string summaryEnd = "</summary>";
-            var idxEnd = content.IndexOf(summaryEnd);
-
-            // Don't handle markdown's line breaks
-            WriteTag(renderer, isInline, "spoiler", content.Slice(idxEnd + summaryEnd.Length));
-            return;
-        }
-
-        renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.ToString(), false, renderer));
+        var document = new HtmlDocument();
+        document.LoadHtml(group.ToSlice().AsSpan().ToString());
+        HandleHTML(renderer, document, isInline);
     }
 
-    private static void WriteTag(NexusModsRenderer renderer, bool isInline, ReadOnlySpan<char> tag, ReadOnlySpan<char> content)
+    private static void HandleHTML(NexusModsRenderer renderer, HtmlDocument document, bool isInline)
+    {
+        foreach (var node in document.DocumentNode.ChildNodes.Where(x => x.NodeType != HtmlNodeType.Comment))
+        {
+            if (!HandleNode(renderer, node, isInline))
+                renderer.Write(MarkdownNexusMods.ToBBCodeReuse(RemoveOneTabulationLevel(node.InnerHtml), false, false, renderer));
+        }
+    }
+    private static bool HandleNode(NexusModsRenderer renderer, HtmlNode node, bool isInline)
+    {
+        if (node.Name == "p" && node.Attributes["align"] is { Value: { } pAlign })
+        {
+            WriteTag(renderer, isInline, false, pAlign, RemoveOneTabulationLevel(node.InnerHtml));
+            return true;
+        }
+        if (node.Name == "img" && node.Attributes["src"] is { Value: { } impSrc })
+        {
+            WriteTag(renderer, isInline, false, "img", impSrc);
+            return true;
+        }
+        if (node.Name == "ins" || node.Name == "u")
+        {
+            WriteTag(renderer, isInline, false, "u", RemoveOneTabulationLevel(node.InnerHtml));
+            return true;
+        }
+        if (node.Name == "details")
+        {
+            if (node.ChildNodes.FirstOrDefault(x => x.Name == "summary") is { } summary)
+                node.RemoveChild(summary);
+
+            WriteTag(renderer, isInline, true, "spoiler", RemoveOneTabulationLevel(node.InnerHtml));
+            return true;
+        }
+
+        return false;
+    }
+
+    private static void WriteTag(NexusModsRenderer renderer, bool isInline, bool forceNewLine, ReadOnlySpan<char> tag, ReadOnlySpan<char> content)
     {
         if (isInline)
         {
             renderer.Write($"[{tag}]");
-            renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.ToString(), false, renderer));
+            renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.ToString(), false, false, renderer));
             renderer.Write($"[/{tag}]");
         }
         else
         {
-            if (!renderer.IsFirstInContainer) renderer.EnsureLine();
+            if (renderer.HTMLForceNewLine || !renderer.IsFirstInContainer) renderer.EnsureLine();
             renderer.Write($"[{tag}]");
             if (content.StartsWith(NewLine)) renderer.EnsureLine();
-            // I do the whitespace trimming because the spoiler will be then marked as a code block
-            renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.Trim(NewLine).Trim().ToString(), false, renderer));
+            renderer.Write(MarkdownNexusMods.ToBBCodeReuse(content.ToString(), false, forceNewLine, renderer));
             if (content.EndsWith(NewLine)) renderer.EnsureLine();
             renderer.Write($"[/{tag}]");
-            if (!renderer.IsLastInContainer) renderer.EnsureLine();
+            if (renderer.HTMLForceNewLine || !renderer.IsLastInContainer) renderer.EnsureLine();
         }
-    }
-
-    private static ReadOnlySpan<char> GetAlign(in StringLine[] lines)
-    {
-        ref var slice = ref lines[0].Slice;
-        return GetAlign(slice.AsSpan());
-    }
-    private static ReadOnlySpan<char> GetAlign(ReadOnlySpan<char> span)
-    {
-        if (span.StartsWith(AlignStart))
-        {
-            var alignStartSlice = span.Slice(AlignStart.Length + 1);
-            if (alignStartSlice.IndexOf('"') is var idx && idx != -1)
-                return alignStartSlice.Slice(0, idx);
-        }
-        return ReadOnlySpan<char>.Empty;
-    }
-
-    private static bool IsUnderscore(in StringLine[] lines)
-    {
-        ref var slice = ref lines[0].Slice;
-        return IsUnderscore(slice.AsSpan());
-    }
-    private static bool IsUnderscore(ReadOnlySpan<char> span)
-    {
-        return span.StartsWith(InsStart) || span.StartsWith(UStart);
-    }
-
-    private static bool IsSpoiler(in StringLine[] lines)
-    {
-        ref var slice = ref lines[0].Slice;
-        return IsSpoiler(slice.AsSpan());
-    }
-    private static bool IsSpoiler(ReadOnlySpan<char> span)
-    {
-        return span.StartsWith(SpoilerStart);
     }
 }

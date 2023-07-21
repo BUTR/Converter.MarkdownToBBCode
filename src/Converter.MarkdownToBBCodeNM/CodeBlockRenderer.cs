@@ -9,8 +9,12 @@ public class CodeBlockRenderer : NexusModsObjectRenderer<CodeBlock>
     protected override void Write(NexusModsRenderer renderer, CodeBlock obj)
     {
         if (!renderer.IsFirstInContainer) renderer.EnsureLine();
-        renderer.WriteLine(obj is FencedCodeBlock { Info: { } info } && !string.IsNullOrEmpty(info) ? $"[code={info}]" : "[code]");
+        // NexusMods can't render when the code block conains the language
+        //renderer.WriteLine(obj is FencedCodeBlock { Info: { } info } && !string.IsNullOrEmpty(info) ? $"[code={info}]" : "[code]");
+        renderer.Write("[code]");
+        renderer.EnsureLine();
         WriteLeafRawLines(renderer, obj, true);
+        renderer.EnsureLine();
         renderer.Write("[/code]");
         if (!renderer.IsLastInContainer) renderer.EnsureLine();
     }

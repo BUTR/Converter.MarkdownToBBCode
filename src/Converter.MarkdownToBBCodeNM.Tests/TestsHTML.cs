@@ -5,12 +5,12 @@ public class TestsHTML
     [Test]
     public void Converts_HTML_Align()
     {
-        var markdown = """
+        const string markdown = """
 <p align="right">
 dfgdfg
 </p>
 """;
-        var bbCode = """
+        const string bbCode = """
 [right]
 dfgdfg
 [/right]
@@ -21,10 +21,10 @@ dfgdfg
     [Test]
     public void Converts_HTML_AlignInline()
     {
-        var markdown = """
+        const string markdown = """
 <p align="right">dfgdfg</p>
 """;
-        var bbCode = """
+        const string bbCode = """
 [right]dfgdfg[/right]
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
@@ -33,12 +33,12 @@ dfgdfg
     [Test]
     public void Converts_HTML_AlignNested()
     {
-        var markdown = """
+        const string markdown = """
 <p align="right">
 **Hello World!**
 </p>
 """;
-        var bbCode = """
+        const string bbCode = """
 [right]
 [b]Hello World![/b]
 [/right]
@@ -50,7 +50,7 @@ dfgdfg
     [Test]
     public void Converts_HTML_Underscore()
     {
-        var markdown = """
+        const string markdown = """
 <u>
 dfgdfg
 </u>
@@ -59,7 +59,7 @@ dfgdfg
 dfgdfg
 </ins>
 """;
-        var bbCode = """
+        const string bbCode = """
 [u]
 dfgdfg
 [/u]
@@ -73,13 +73,13 @@ dfgdfg
     [Test]
     public void Converts_HTML_UnderscoreInline()
     {
-        var markdown = """
+        const string markdown = """
 <u>dfgdfg</u>
 <u><div>dfgdfg</div></u>
 
 <ins>dfgdfg</ins>
 """;
-        var bbCode = """
+        const string bbCode = """
 [u]dfgdfg[/u]
 [u]dfgdfg[/u]
 [u]dfgdfg[/u]
@@ -90,7 +90,7 @@ dfgdfg
     [Test]
     public void Converts_HTML_UnderscoreNested()
     {
-        var markdown = """
+        const string markdown = """
 <u>
 **Hello World!**
 </u>
@@ -99,7 +99,7 @@ dfgdfg
 **Hello World!**
 </ins>
 """;
-        var bbCode = """
+        const string bbCode = """
 [u]
 [b]Hello World![/b]
 [/u]
@@ -114,13 +114,13 @@ dfgdfg
     [Test]
     public void Converts_HTML_Spoiler()
     {
-        var markdown = """
+        const string markdown = """
 <details>
     <summary>Details</summary>
     Something small enough to escape casual notice.
 </details>
 """;
-        var bbCode = """
+        const string bbCode = """
 [spoiler]
 Something small enough to escape casual notice.
 [/spoiler]
@@ -131,18 +131,64 @@ Something small enough to escape casual notice.
     [Test]
     public void Converts_HTML_SpoilerMultiline()
     {
-        var markdown = """
+        const string markdown = """
 <details>
     <summary>Details</summary>
     Something small enough to escape casual notice.
     Something small enough to escape casual notice.
 </details>
 """;
-        var bbCode = """
+        const string bbCode = """
 [spoiler]
 Something small enough to escape casual notice.
 Something small enough to escape casual notice.
 [/spoiler]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_HTML_SpoilerNested()
+    {
+        const string markdown = """
+<details>
+<summary>Xbox Game Pass PC</summary>
+  <p>You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'</p>
+  <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png" alt="BLSE Installation Path" width="500">
+  <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'</p>
+  <img src="https://media.discordapp.net/attachments/422092475163869201/1088721253692616775/image.png" alt="Bannerlord.Harmony Installation Path" width="500">
+</details>
+""";
+        const string bbCode = """
+[spoiler]
+You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'
+[img]https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png[/img]
+You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'
+[img]https://media.discordapp.net/attachments/422092475163869201/1088721253692616775/image.png[/img]
+
+[/spoiler]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+
+    [Test]
+    public void Converts_HTML_Nested()
+    {
+        const string markdown = """
+# Bannerlord.BLSE
+<p align="center">
+  <a href="https://github.com/BUTR/Bannerlord.UIExtenderEx" alt="Logo">
+    <img src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" />
+  </a>
+  </br>
+</p>
+""";
+        const string bbCode = """
+[size=6]Bannerlord.BLSE[/size]
+[center]
+[img]https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png[/img]
+[/center]
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }

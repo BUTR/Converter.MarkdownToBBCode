@@ -5,11 +5,11 @@ public class TestsQuote
     [Test]
     public void Converts_Quote()
     {
-        var markdown = """
+        const string markdown = """
 > Hello
 > World!
 """;
-        var bbCode = """
+        const string bbCode = """
 [quote]
 Hello
 World!
@@ -21,14 +21,14 @@ World!
     [Test]
     public void Converts_Quote_Multiple()
     {
-        var markdown = $"""
+        const string markdown = $"""
 > Hello
 > World!
 
 > Bye
 > World!
 """;
-        var bbCode = """
+        const string bbCode = """
 [quote]
 Hello
 World!

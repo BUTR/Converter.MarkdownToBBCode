@@ -5,15 +5,15 @@ public class TestsCodeBlock
     [Test]
     public void Converts_CodeBlock()
     {
-        var markdown = """
+        const string markdown = """
 ```xml
   <ItemGroup>
     <PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" />
   </ItemGroup>
 ```
 """;
-        var bbCode = """
-[code=xml]
+        const string bbCode = """
+[code]
   <ItemGroup>
     <PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" />
   </ItemGroup>
@@ -25,14 +25,14 @@ public class TestsCodeBlock
     [Test]
     public void Converts_CodeBlock_Generic()
     {
-        var markdown = """
+        const string markdown = """
 ```
   <ItemGroup>
     <PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" />
   </ItemGroup>
 ```
 """;
-        var bbCode = """
+        const string bbCode = """
 [code]
   <ItemGroup>
     <PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" />
@@ -45,11 +45,11 @@ public class TestsCodeBlock
     [Test]
     public void Converts_CodeBlock_Inline()
     {
-        var markdown = """
+        const string markdown = """
 `<ItemGroup><PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" /></ItemGroup>`
 """;
-        var bbCode = """
-[code]<ItemGroup><PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" /></ItemGroup>[/code]
+        const string bbCode = """
+[b]<ItemGroup><PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" /></ItemGroup>[/b]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }

@@ -5,7 +5,7 @@ public class TestsHeading
     [Test]
     public void Converts_Heading()
     {
-        var markdown = """
+        const string markdown = """
 # One
 ## Two
 ### Three
@@ -13,13 +13,13 @@ public class TestsHeading
 ##### Five
 ###### Six
 """;
-        var bbCode = """
-[size=1]One[/size]
-[size=2]Two[/size]
-[size=3]Three[/size]
-[size=4]Four[/size]
-[size=5]Five[/size]
-[size=6]Six[/size]
+        const string bbCode = """
+[size=6]One[/size]
+[size=5]Two[/size]
+[size=4]Three[/size]
+[size=3]Four[/size]
+[size=2]Five[/size]
+[size=1]Six[/size]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }

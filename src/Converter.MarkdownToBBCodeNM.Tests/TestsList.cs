@@ -5,18 +5,16 @@ public class TestsList
     [Test]
     public void Converts_ListOrdered()
     {
-        var markdown = """
+        const string markdown = """
 1. One
 2. Two
 3. Three
 """;
-        var bbCode = """
+        const string bbCode = """
 [list=1]
 [*]One
 [*]Two
-[*]Three
-[/list]
-
+[*]Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -24,18 +22,16 @@ public class TestsList
     [Test]
     public void Converts_ListUnordered()
     {
-        var markdown = """
+        const string markdown = """
 * One
 * Two
 * Three
 """;
-        var bbCode = """
+        const string bbCode = """
 [list]
 [*]One
 [*]Two
-[*]Three
-[/list]
-
+[*]Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -44,7 +40,7 @@ public class TestsList
     [Test]
     public void Converts_ListNested()
     {
-        var markdown = $"""
+        const string markdown = $"""
 * One
   * One One
   * One Two
@@ -62,34 +58,27 @@ public class TestsList
 3. Three
 
 """;
-        var bbCode = """
+        const string bbCode = """
 [list]
 [*]One
 [list]
 [*]One One
-[*]One Two
-[/list]
+[*]One Two[/list]
 [*]Two
 [list=1]
 [*]Two One
-[*]Two Two
-[/list]
-[*]Three
-[/list]
+[*]Two Two[/list]
+[*]Three[/list]
 [list=1]
-[*]One
-[/list]
+[*]One[/list]
 [list]
 [*]One One
-[*]One Two
-[/list]
+[*]One Two[/list]
 [list=1]
 [*]Two
 [*]Two One
 [*]Two Two
-[*]Three
-[/list]
-
+[*]Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }

@@ -9,14 +9,16 @@ public class ListRenderer : NexusModsObjectRenderer<ListBlock>
         if (!renderer.IsFirstInContainer) renderer.EnsureLine();
 
         renderer.Write(listBlock.IsOrdered ? "[list=1]" : "[list]");
-        foreach (ListItemBlock listItem in listBlock)
+        for (var i = 0; i < listBlock.Count; i++)
         {
+            var listItem = (ListItemBlock) listBlock[i];
             renderer.EnsureLine();
             renderer.Write("[*]");
             renderer.WriteChildren(listItem);
-            renderer.EnsureLine();
+            // Don't add newline to the last item because it breaks NexusMods nested list rendering
+            if (i != listBlock.Count - 1) renderer.EnsureLine();
         }
-        renderer.WriteLine("[/list]");
+        renderer.Write("[/list]");
 
         if (!renderer.IsLastInContainer) renderer.EnsureLine();
     }

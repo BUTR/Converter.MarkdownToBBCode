@@ -10,12 +10,15 @@ namespace Converter.MarkdownToBBCodeNM;
 public static class MarkdownNexusMods
 {
     // I'm a genius
-    internal static string ToBBCodeReuse(string markdown, bool? doubleLineBreakAsNewLine, NexusModsRenderer rendererOld)
+    internal static string ToBBCodeReuse(string markdown, bool? doubleLineBreakAsNewLine, bool htmlForceNewLine, NexusModsRenderer rendererOld)
     {
         var document = MarkdownParser.Parse(markdown, rendererOld.Pipeline);
 
         using var writer = new StringWriter();
-        var renderer = new NexusModsRenderer(rendererOld.Pipeline, doubleLineBreakAsNewLine ?? rendererOld.DoubleLineBreakAsNewLine, rendererOld.HandleHTML, writer);
+        var renderer = new NexusModsRenderer(rendererOld.Pipeline, doubleLineBreakAsNewLine ?? rendererOld.DoubleLineBreakAsNewLine, rendererOld.HandleHTML, writer)
+        {
+            HTMLForceNewLine = htmlForceNewLine
+        };
         renderer.Render(document);
         renderer.Writer.Flush();
 

@@ -7,12 +7,12 @@ public class TestsEmphasis
     [Test]
     public void Converts_Emphasis_Bold()
     {
-        var markdown = $"""
+        const string markdown = """
 **Hello World!**
 
 __Hello World!__
 """;
-        var bbCode = """
+        const string bbCode = """
 [b]Hello World![/b]
 [b]Hello World![/b]
 """;
@@ -22,12 +22,12 @@ __Hello World!__
     [Test]
     public void Converts_Emphasis_Italic()
     {
-        var markdown = $"""
+        const string markdown = """
 *Hello World!*
 
 _Hello World!_
 """;
-        var bbCode = """
+        const string bbCode = """
 [i]Hello World![/i]
 [i]Hello World![/i]
 """;
@@ -37,10 +37,10 @@ _Hello World!_
     [Test]
     public void Converts_Emphasis_Strikethrough()
     {
-        var markdown = """
+        const string markdown = """
 ~~Hello World!~~
 """;
-        var bbCode = """
+        const string bbCode = """
 [s]Hello World![/s]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
@@ -48,10 +48,10 @@ _Hello World!_
     [Test]
     public void Converts_Emphasis_BoldItalic()
     {
-        var markdown = """
+        const string markdown = """
 ***Hello World!***
 """;
-        var bbCode = """
+        const string bbCode = """
 [i][b]Hello World![/b][/i]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
