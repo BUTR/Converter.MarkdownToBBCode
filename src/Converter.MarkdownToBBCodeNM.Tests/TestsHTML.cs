@@ -75,6 +75,7 @@ dfgdfg
     {
         const string markdown = """
 <u>dfgdfg</u>
+
 <u><div>dfgdfg</div></u>
 
 <ins>dfgdfg</ins>
@@ -122,6 +123,7 @@ dfgdfg
 """;
         const string bbCode = """
 [spoiler]
+[b]Details[/b]
 Something small enough to escape casual notice.
 [/spoiler]
 """;
@@ -140,6 +142,7 @@ Something small enough to escape casual notice.
 """;
         const string bbCode = """
 [spoiler]
+[b]Details[/b]
 Something small enough to escape casual notice.
 Something small enough to escape casual notice.
 [/spoiler]
@@ -161,6 +164,7 @@ Something small enough to escape casual notice.
 """;
         const string bbCode = """
 [spoiler]
+[b]Xbox Game Pass PC[/b]
 You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'
 [img]https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png[/img]
 You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'
@@ -187,8 +191,25 @@ You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount 
         const string bbCode = """
 [size=6]Bannerlord.BLSE[/size]
 [center]
+[url=https://github.com/BUTR/Bannerlord.UIExtenderEx]
 [img]https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png[/img]
+[/url]
+
 [/center]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_HTML_Nested2() // This path triggers Paragrap parsing
+    {
+        const string markdown = """
+# Bannerlord.BLSE
+<a href="https://github.com/BUTR/Bannerlord.UIExtenderEx" ><img alt="Logo" src="https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png" /></a>
+""";
+        const string bbCode = """
+[size=6]Bannerlord.BLSE[/size]
+[url=https://github.com/BUTR/Bannerlord.UIExtenderEx][img]https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png[/img][/url]
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }

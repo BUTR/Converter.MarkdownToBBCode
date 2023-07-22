@@ -1,5 +1,5 @@
 # Converter.MarkdownToBBCodeNM
-Converts Markdown into NexusMods BBCode
+Converts Markdown into NexusMods BBCode. Might be opionated with the HTML conversion, since there are a few ways to interpret HTML
 
 ### Installation
 ```shell

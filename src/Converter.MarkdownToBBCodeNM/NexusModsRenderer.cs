@@ -36,8 +36,8 @@ public class NexusModsRenderer : TextRendererBase<NexusModsRenderer>
         //ObjectRenderers.Add(new DelimiterInlineRenderer());
         ObjectRenderers.Add(new EmphasisInlineRenderer());
         ObjectRenderers.Add(new LineBreakInlineRenderer());
-        if (handleHTML) ObjectRenderers.Add(new HtmlInlineRenderer());
-        if (handleHTML) ObjectRenderers.Add(new HtmlEntityInlineRenderer());
+        //if (handleHTML) ObjectRenderers.Add(new HtmlInlineRenderer());
+        //if (handleHTML) ObjectRenderers.Add(new HtmlEntityInlineRenderer());
         ObjectRenderers.Add(new LinkInlineRenderer());
         ObjectRenderers.Add(new LiteralInlineRenderer());
     }
