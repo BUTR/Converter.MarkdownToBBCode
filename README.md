@@ -21,6 +21,12 @@ converted BBCode to the file instead of outputting to the console.
 `-d or --disableextended` will disable newline detection via two spaces
 and will disable HTML conversion
 
+## Notes
+* You can ignore a HTML element by adding `converter_ignore` attribute to the element
+  ```HTML
+  <p converter_ignore>WILL NOT BE CONVERTED TO BBCODE</p>
+  ```
+
 ## Supporting Codes
 | BBCode                                 | Markdown                                                                  | Implementation |
 |----------------------------------------|---------------------------------------------------------------------------|----------------|
