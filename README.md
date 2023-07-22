@@ -6,7 +6,7 @@ Converts Markdown into NexusMods BBCode. Might be opionated with the HTML conver
 dotnet tool install -g Converter.MarkdownToBBCodeNM.Tool
 ```
 
-### Example
+### Usage
 When installed as a global tool:
 ```shell
 markdown_to_bbcodenm -i "**raw markdown**"
@@ -20,6 +20,10 @@ markdown_to_bbcodenm -i "/markdown.md" -o "/bbcode.txt";
 converted BBCode to the file instead of outputting to the console.  
 `-d or --disableextended` will disable newline detection via two spaces
 and will disable HTML conversion
+
+## Example
+At the time of writing the tool, it was used to keep in sync the description of the BLSE mod for Bannerlord.  
+BLSE - [GitHub](https://github.com/BUTR/Bannerlord.BLSE) -> [NexusMods](https://www.nexusmods.com/mountandblade2bannerlord/mods/1)
 
 ## Notes
 * You can ignore an HTML element by adding `converter_ignore` attribute to the element
