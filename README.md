@@ -36,8 +36,8 @@ and will disable HTML conversion
 | \[list=1]\[*]ENTRY\[/list]             | 1. ENTRY                                                                  | Markdown       |
 | \[list]\[*]ENTRY\[/list]               | \* ENTRY                                                                  | Markdown       |
 | \[line]                                | \<hr\/\>                                                                  | HTML           |
-| \[color=COLOR]TEXT\[/color]            |                                                                           | Not Possible   |
-| \[font=FONT]TEXT\[/font]               |                                                                           | Not Possible   |
+| \[color=COLOR]TEXT\[/color]            |                                                                           |                |
+| \[font=FONT]TEXT\[/font]               |                                                                           |                |
 | \[center]TEXT\[/center]                | \<p align=\"center\"\>TEXT\<\/p\>                                         | HTML           |
 | \[right]TEXT\[/right]                  | \<p align=\"right\"\>TEXT\<\/p\>                                          | HTML           |
 | \[left]TEXT\[/left]                    | \<p align=\"left\"\>TEXT\<\/p\>                                           | HTML           |
