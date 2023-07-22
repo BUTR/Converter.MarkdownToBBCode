@@ -107,53 +107,42 @@ internal static class HtmlUtils
     private static bool ProcessHTMLNode(NexusModsRenderer renderer, HtmlNode node, bool isInline)
     {
         if (node.Attributes["converter_ignore"] is not null) return true;
-
-        if (node.Name == "p" && node.Attributes["align"] is { Value: { } pAlign })
+        switch (node.Name)
         {
-            WriteBBCode(renderer, isInline, true, false, pAlign, ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-            return true;
+            case "p" when node.Attributes["align"] is { Value: { } align }:
+                WriteBBCode(renderer, isInline, true, false, align, ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                return true;
+            case "a" when node.Attributes["nexusmods_href"] is { Value: { } href }:
+                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
+                return true;
+            case "a" when node.Attributes["href"] is { Value: { } href }:
+                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
+                return true;
+            case "img" when node.Attributes["nexusmods_src"] is { Value: { } src }:
+                WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
+                return true;
+            case "img" when node.Attributes["src"] is { Value: { } src }:
+                WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
+                return true;
+            case "ins":
+            case "u":
+                WriteBBCode(renderer, isInline, true, false, "u", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                return true;
+            case "hr":
+                renderer.EnsureLine();
+                WriteBBCode(renderer, isInline, false, false, "line", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                renderer.EnsureLine();
+                return true;
+            case "br":
+                renderer.EnsureLine();
+                return true;
+            case "details":
+                WriteBBCode(renderer, isInline, true, true, "spoiler", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                return true;
+            case "summary":
+                WriteBBCode(renderer, isInline, true, false, "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                return true;
         }
-        if (node.Name == "a" && node.Attributes["href"] is { Value: { } aHRef })
-        {
-            WriteBBCode(renderer, isInline, true, false, "url", $"={aHRef}", RemoveOneTabulationLevel(node.InnerHtml));
-            return true;
-        }
-        if (node.Name == "img" && node.Attributes["src"] is { Value: { } imgSrc })
-        {
-            WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, imgSrc);
-            return true;
-        }
-        if (node.Name == "ins" || node.Name == "u")
-        {
-            WriteBBCode(renderer, isInline, true, false, "u", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-            return true;
-        }
-        if (node.Name == "hr")
-        {
-            renderer.EnsureLine();
-            WriteBBCode(renderer, isInline, false, false, "line", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-            renderer.EnsureLine();
-            return true;
-        }
-        if (node.Name == "br")
-        {
-            renderer.EnsureLine();
-            return true;
-        }
-        if (node.Name == "details")
-        {
-            //if (node.ChildNodes.FirstOrDefault(x => x.Name == "summary") is { } summary)
-            //    node.RemoveChild(summary);
-
-            WriteBBCode(renderer, isInline, true, true, "spoiler", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-            return true;
-        }
-        if (node.Name == "summary")
-        {
-            WriteBBCode(renderer, isInline, true, false, "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-            return true;
-        }
-
         return false;
     }
 
