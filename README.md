@@ -22,30 +22,30 @@ converted BBCode to the file instead of outputting to the console.
 and will disable HTML conversion
 
 ## Supporting Codes
-| BBCode                                 | Markdown                                                                     | Implementation|
-| -------------------------------------- | ---------------------------------------------------------------------------- | ------------- |
-| [b]TEXT[/b]                            | \*\*TEXT\*\*                                                                 | Markdown      |
-| [i]TEXT[/i]                            | \*TEXT\*                                                                     | Markdown      |
-| [u]TEXT[/u]                            | \<ins\>TEXT\<\/ins\> OR \<u\>TEXT\<\/u\>                                     | HTML          |
-| [s]TEXT[/s]                            | \~\~TEXT\~\~                                                                 | Markdown      |
-| [url=URL]TEXT[/url]                    | \[TEXT\]\(URL\)                                                              | Markdown      |
-| [img]URL[/img]                         | \!\[Alt text\]\(URL\)                                                        | Markdown      |
-| [quote]TEXT[/quote]                    | \> TEXT                                                                      | Markdown      |
-| [quote AUTHOR]TEXT[/quote]             | \> TEXT                                                                      | Markdown      |
-| [code]CODE[/code]                      | \`\`\`CODE\`\`\`                                                             | Markdown      |
-| [list=1][*]ENTRY[/list]                | 1. ENTRY                                                                     | Markdown      |
-| [list][*]ENTRY[/list]                  | \* ENTRY                                                                     | Markdown      |
-| [line]                                 | \<hr\/\>                                                                     | HTML          |
-| [color=COLOR]TEXT[/color]              |                                                                              | Not Possible  |
-| [font=FONT]TEXT[/font]                 |                                                                              | Not Possible  |
-| [center]TEXT[/center]                  | \<p align=\"center\"\>TEXT\<\/p\>                                            | HTML          |
-| [right]TEXT[/right]                    | \<p align=\"right\"\>TEXT\<\/p\>                                             | HTML          |
-| [left]TEXT[/left]                      | \<p align=\"left\"\>TEXT\<\/p\>                                              | HTML          |
-| [size=1]TEXT[/size]                    | ###### TEXT                                                                  | Markdown      |
-| [size=2]TEXT[/size]                    | ##### TEXT                                                                   | Markdown      |
-| [size=3]TEXT[/size]                    | #### TEXT                                                                    | Markdown      |
-| [size=4]TEXT[/size]                    | ### TEXT                                                                     | Markdown      |
-| [size=5]TEXT[/size]                    | ## TEXT                                                                      | Markdown      |
-| [size=6]TEXT[/size]                    | # TEXT                                                                       | Markdown      |
-| [spoiler]TEXT[/spoiler]                | \<details\>\<summary\>Spoiler\<\/summary\>TEXT\<\/details\>                  | HTML          |
-| [youtube]ID[/youtube]                  | [https://www.youtube.com/watch?v=ID](https://www.youtube.com/watch?v=ID\)    | Markdown      |
+| BBCode                                 | Markdown                                                                  | Implementation |
+|----------------------------------------|---------------------------------------------------------------------------|----------------|
+| \[b\]TEXT\[\b]                         | \*\*TEXT\*\*                                                              | Markdown       |
+| \[i\]TEXT\[/i]                         | \*TEXT\*                                                                  | Markdown       |
+| \[u]TEXT\[/u]                          | \<ins\>TEXT\<\/ins\> OR \<u\>TEXT\<\/u\>                                  | HTML           |
+| \[s]TEXT\[/s]                          | \~\~TEXT\~\~                                                              | Markdown       |
+| \[url=URL]TEXT\[/url]                  | \[TEXT\]\(URL\)                                                           | Markdown       |
+| \[img]URL\[/img]                       | \!\[Alt text\]\(URL\)                                                     | Markdown       |
+| \[quote]TEXT\[/quote]                  | \> TEXT                                                                   | Markdown       |
+| \[quote AUTHOR]TEXT\[/quote]           | \> TEXT                                                                   | Markdown       |
+| \[code]CODE\[/code]                    | \`\`\`CODE\`\`\`                                                          | Markdown       |
+| \[list=1]\[*]ENTRY\[/list]             | 1. ENTRY                                                                  | Markdown       |
+| \[list]\[*]ENTRY\[/list]               | \* ENTRY                                                                  | Markdown       |
+| \[line]                                | \<hr\/\>                                                                  | HTML           |
+| \[color=COLOR]TEXT\[/color]            |                                                                           | Not Possible   |
+| \[font=FONT]TEXT\[/font]               |                                                                           | Not Possible   |
+| \[center]TEXT\[/center]                | \<p align=\"center\"\>TEXT\<\/p\>                                         | HTML           |
+| \[right]TEXT\[/right]                  | \<p align=\"right\"\>TEXT\<\/p\>                                          | HTML           |
+| \[left]TEXT\[/left]                    | \<p align=\"left\"\>TEXT\<\/p\>                                           | HTML           |
+| \[size=1]TEXT\[/size]                  | ###### TEXT                                                               | Markdown       |
+| \[size=2]TEXT\[/size]                  | ##### TEXT                                                                | Markdown       |
+| \[size=3]TEXT\[/size]                  | #### TEXT                                                                 | Markdown       |
+| \[size=4]TEXT\[/size]                  | ### TEXT                                                                  | Markdown       |
+| \[size=5]TEXT\[/size]                  | ## TEXT                                                                   | Markdown       |
+| \[size=6]TEXT\[/size]                  | # TEXT                                                                    | Markdown       |
+| \[spoiler]SUMMARY\\n\\rTEXT\[/spoiler] | \<details\>\<summary\>SUMMARY\<\/summary\>TEXT\<\/details\>               | HTML           |
+| \[youtube]ID\[/youtube]                | \[https://www.youtube.com/watch?v=ID](https://www.youtube.com/watch?v=ID) | Markdown       |
