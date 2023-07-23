@@ -1,8 +1,8 @@
-﻿using Markdig.Syntax;
+﻿using Markdig.Helpers;
+using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 
 using System;
-using System.Text;
 
 namespace Converter.MarkdownToBBCodeNM;
 
@@ -34,6 +34,7 @@ public class ParagraphRenderer : NexusModsObjectRenderer<ParagraphBlock>
 
     protected override void Write(NexusModsRenderer renderer, ParagraphBlock obj)
     {
+        if (obj.LinesBefore?.Count > 0 && obj.LinesBefore?[0].NewLine != NewLine.None) renderer.WriteLine();
         if (!renderer.IsFirstInContainer) renderer.EnsureLine();
 
         ProcessDoubleLineBreak(renderer, obj);
@@ -43,5 +44,6 @@ public class ParagraphRenderer : NexusModsObjectRenderer<ParagraphBlock>
         renderer.WriteLeafInline(obj);
 
         if (!renderer.IsLastInContainer) renderer.EnsureLine();
+        if (obj.LinesAfter?.Count > 0 && obj.LinesAfter?[0].NewLine != NewLine.None) renderer.WriteLine();
     }
 }

@@ -82,7 +82,9 @@ dfgdfg
 """;
         const string bbCode = """
 [u]dfgdfg[/u]
+
 [u]dfgdfg[/u]
+
 [u]dfgdfg[/u]
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
@@ -155,7 +157,7 @@ Something small enough to escape casual notice.
     {
         const string markdown = """
 <details>
-<summary>Xbox Game Pass PC</summary>
+  <summary>Xbox Game Pass PC</summary>
   <p>You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'</p>
   <img src="https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png" alt="BLSE Installation Path" width="500">
   <p>You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'</p>

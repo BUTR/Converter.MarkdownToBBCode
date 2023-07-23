@@ -14,6 +14,7 @@ __Hello World!__
 """;
         const string bbCode = """
 [b]Hello World![/b]
+
 [b]Hello World![/b]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
@@ -29,6 +30,7 @@ _Hello World!_
 """;
         const string bbCode = """
 [i]Hello World![/i]
+
 [i]Hello World![/i]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
@@ -53,6 +55,19 @@ _Hello World!_
 """;
         const string bbCode = """
 [i][b]Hello World![/b][/i]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
+    }
+
+
+    [Test]
+    public void Converts_Emphasis_Spaces()
+    {
+        const string markdown = """
+This is a **Hello World** !
+""";
+        const string bbCode = """
+This is a [b]Hello World[/b] !
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }

@@ -16,6 +16,7 @@ This is one line
         const string bbCode = """
 This is not
 one line
+
 This is one line
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
@@ -35,8 +36,10 @@ This is one line
 """;
         const string bbCode = """
 This is one line
+
 This is not
 one line
+
 This is one line
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));

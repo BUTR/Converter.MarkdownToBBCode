@@ -1,4 +1,5 @@
-﻿using Markdig.Syntax;
+﻿using Markdig.Helpers;
+using Markdig.Syntax;
 
 using System;
 
@@ -8,7 +9,9 @@ public class CodeBlockRenderer : NexusModsObjectRenderer<CodeBlock>
 {
     protected override void Write(NexusModsRenderer renderer, CodeBlock obj)
     {
+        if (obj.LinesBefore?.Count > 0 && obj.LinesBefore?[0].NewLine != NewLine.None) renderer.WriteLine();
         if (!renderer.IsFirstInContainer) renderer.EnsureLine();
+
         // NexusMods can't render when the code block conains the language
         //renderer.WriteLine(obj is FencedCodeBlock { Info: { } info } && !string.IsNullOrEmpty(info) ? $"[code={info}]" : "[code]");
         renderer.Write("[code]");
@@ -16,7 +19,9 @@ public class CodeBlockRenderer : NexusModsObjectRenderer<CodeBlock>
         WriteLeafRawLines(renderer, obj, true);
         renderer.EnsureLine();
         renderer.Write("[/code]");
+
         if (!renderer.IsLastInContainer) renderer.EnsureLine();
+        if (obj.LinesAfter?.Count > 0 && obj.LinesAfter?[0].NewLine != NewLine.None) renderer.WriteLine();
     }
 
     private void WriteLeafRawLines(NexusModsRenderer renderer, LeafBlock? leafBlock, bool writeEndOfLines)

@@ -12,9 +12,9 @@ public class TestsList
 """;
         const string bbCode = """
 [list=1]
-[*]One
-[*]Two
-[*]Three[/list]
+[*] One
+[*] Two
+[*] Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -29,9 +29,9 @@ public class TestsList
 """;
         const string bbCode = """
 [list]
-[*]One
-[*]Two
-[*]Three[/list]
+[*] One
+[*] Two
+[*] Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -60,25 +60,26 @@ public class TestsList
 """;
         const string bbCode = """
 [list]
-[*]One
+[*] One
 [list]
-[*]One One
-[*]One Two[/list]
-[*]Two
+[*] One One
+[*] One Two[/list]
+[*] Two
 [list=1]
-[*]Two One
-[*]Two Two[/list]
-[*]Three[/list]
+[*] Two One
+[*] Two Two[/list]
+[*] Three
+[/list]
 [list=1]
-[*]One[/list]
+[*] One[/list]
 [list]
-[*]One One
-[*]One Two[/list]
+[*] One One
+[*] One Two[/list]
 [list=1]
-[*]Two
-[*]Two One
-[*]Two Two
-[*]Three[/list]
+[*] Two
+[*] Two One
+[*] Two Two
+[*] Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }

@@ -6,13 +6,12 @@ using System.IO;
 
 namespace Converter.MarkdownToBBCodeNM;
 
-// TODO: No artibrary line breaks
 public static class MarkdownNexusMods
 {
     // I'm a genius
     internal static string ToBBCodeReuse(string markdown, bool? doubleLineBreakAsNewLine, bool htmlForceNewLine, NexusModsRenderer rendererOld)
     {
-        var document = MarkdownParser.Parse(markdown, rendererOld.Pipeline);
+        var document = MarkdownParser.Parse(markdown.Trim('\r', '\n'), rendererOld.Pipeline);
 
         using var writer = new StringWriter();
         var renderer = new NexusModsRenderer(rendererOld.Pipeline, doubleLineBreakAsNewLine ?? rendererOld.DoubleLineBreakAsNewLine, rendererOld.HandleHTML, writer)
@@ -27,7 +26,7 @@ public static class MarkdownNexusMods
 
     public static string ToBBCode(string markdown)
     {
-        var pipeline = new MarkdownPipelineBuilder().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
+        var pipeline = new MarkdownPipelineBuilder().EnableTrackTrivia().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
 
         var document = MarkdownParser.Parse(markdown, pipeline);
 
@@ -41,7 +40,7 @@ public static class MarkdownNexusMods
 
     public static string ToBBCodeExtended(string markdown)
     {
-        var pipeline = new MarkdownPipelineBuilder().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
+        var pipeline = new MarkdownPipelineBuilder().EnableTrackTrivia().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
 
         var document = MarkdownParser.Parse(markdown, pipeline);
 
