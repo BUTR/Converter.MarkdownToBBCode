@@ -30,7 +30,7 @@ BLSE - [GitHub](https://github.com/BUTR/Bannerlord.BLSE) -> [NexusMods](https://
   ```HTML
   <p converter_ignore>WILL NOT BE CONVERTED TO BBCODE</p>
   ```
-* You can set an alternative `href` for an image for NexusMods by adding a `nexusmods_href` attribute to the element
+* You can set an alternative `href` for a link for NexusMods by adding a `nexusmods_href` attribute to the element
   ```HTML
   <a href="MARKDOWN_LINK" nexusmods_href="NEXUSMODS_LINK" /> </a>
   ```
