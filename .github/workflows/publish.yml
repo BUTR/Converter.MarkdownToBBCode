@@ -19,8 +19,10 @@ jobs:
         with:
           dotnet-version: 7.0.x
             
-      - name: Build
-        run: dotnet pack src/Converter.MarkdownToBBCodeNM.Tool/Converter.MarkdownToBBCodeNM.Tool.csproj --configuration Release -o ./packages;
+      - name: Pack
+        run: |
+          dotnet pack src/Converter.MarkdownToBBCodeNM.Tool/Converter.MarkdownToBBCodeNM.Tool.csproj --configuration Release -o ./packages;
+          dotnet pack src/Converter.MarkdownToBBCodeSteam.Tool/Converter.MarkdownToBBCodeSteam.Tool.csproj --configuration Release -o ./packages;
         shell: pwsh
 
       - name: Upload packages
