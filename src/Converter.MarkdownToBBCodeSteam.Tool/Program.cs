@@ -3,7 +3,7 @@
 using System;
 using System.IO;
 
-namespace Converter.MarkdownToBBCodeNM.Tool;
+namespace Converter.MarkdownToBBCodeSteam.Tool;
 
 [Verb("convert", true, HelpText = "Converts the input")]
 public class ConvertOptions
@@ -30,7 +30,7 @@ public static class Program
                 if (File.Exists(o.Input))
                 {
                     var content = File.ReadAllText(o.Input);
-                    var bbcode = o.DisableExtendedFeatures ? MarkdownNexusMods.ToBBCode(content) : MarkdownNexusMods.ToBBCodeExtended(content);
+                    var bbcode = o.DisableExtendedFeatures ? MarkdownSteam.ToBBCode(content) : MarkdownSteam.ToBBCodeExtended(content);
                     if (!string.IsNullOrEmpty(o.OutputFilePath))
                         File.WriteAllText(o.OutputFilePath, bbcode);
                     else
@@ -38,7 +38,7 @@ public static class Program
                 }
                 else
                 {
-                    var bbcode = o.DisableExtendedFeatures ? MarkdownNexusMods.ToBBCode(o.Input) : MarkdownNexusMods.ToBBCodeExtended(o.Input);
+                    var bbcode = o.DisableExtendedFeatures ? MarkdownSteam.ToBBCode(o.Input) : MarkdownSteam.ToBBCodeExtended(o.Input);
                     if (!string.IsNullOrEmpty(o.OutputFilePath))
                         File.WriteAllText(o.OutputFilePath, bbcode);
                     else

@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Converter.MarkdownToBBCode.Shared\Converter.MarkdownToBBCode.Shared.csproj" />
+        <ProjectReference Include="..\Converter.MarkdownToBBCode.Shared\Converter.MarkdownToBBCode.Shared.csproj" />
     </ItemGroup>
 
 </Project>

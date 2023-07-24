@@ -6,9 +6,9 @@ using Markdig.Parsers;
 
 using System.IO;
 
-namespace Converter.MarkdownToBBCodeNM;
+namespace Converter.MarkdownToBBCodeSteam;
 
-public static class MarkdownNexusMods
+public static class MarkdownSteam
 {
     public static string ToBBCode(string markdown)
     {
@@ -17,7 +17,7 @@ public static class MarkdownNexusMods
         var document = MarkdownParser.Parse(markdown, pipeline);
 
         using var writer = new StringWriter();
-        var renderer = new BBCodeRenderer(BBCodeType.NexusMods, pipeline, false, false, writer);
+        var renderer = new BBCodeRenderer(BBCodeType.Steam, pipeline, false, false, writer);
         renderer.Render(document);
         renderer.Writer.Flush();
 
@@ -31,7 +31,7 @@ public static class MarkdownNexusMods
         var document = MarkdownParser.Parse(markdown, pipeline);
 
         using var writer = new StringWriter();
-        var renderer = new BBCodeRenderer(BBCodeType.NexusMods, pipeline, true, true, writer);
+        var renderer = new BBCodeRenderer(BBCodeType.Steam, pipeline, true, true, writer);
         renderer.Render(document);
         renderer.Writer.Flush();
 

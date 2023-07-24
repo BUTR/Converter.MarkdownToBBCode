@@ -9,24 +9,24 @@
         <GITHUB_RUN_NUMBER Condition="$(GITHUB_RUN_NUMBER) == ''">0</GITHUB_RUN_NUMBER>
         <Version>1.0.0.$(GITHUB_RUN_NUMBER) </Version>
 
-        <ToolCommandName>markdown_to_bbcodenm</ToolCommandName>
+        <ToolCommandName>markdown_to_bbcodesteam</ToolCommandName>
         <IsTool>true</IsTool>
         <PackAsTool>true</PackAsTool>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Converter.MarkdownToBBCodeNM.Tool</PackageId>
+        <PackageId>Converter.MarkdownToBBCodeSteam.Tool</PackageId>
         <PackageVersion>$(Version)</PackageVersion>
-        <Title>Markdown To BBCode NexusMods</Title>
+        <Title>Markdown To BBCode Steam</Title>
         <Authors>Aragas</Authors>
         <Company>BUTR</Company>
-        <Description>Converts Markdown to NexusMods BBCode flavor</Description>
+        <Description>Converts Markdown to Steam BBCode flavor</Description>
         <Copyright>Copyright © 2023 Bannerlord's Unofficial Tools &amp; Resources</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageTags>markdown bbcode nexusmods</PackageTags>
+        <PackageTags>markdown bbcode steam</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
 
     <ItemGroup>
@@ -42,7 +42,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Converter.MarkdownToBBCodeNM\Converter.MarkdownToBBCodeNM.csproj" />
+        <ProjectReference Include="..\Converter.MarkdownToBBCodeSteam\Converter.MarkdownToBBCodeSteam.csproj" />
     </ItemGroup>
 
 </Project>
