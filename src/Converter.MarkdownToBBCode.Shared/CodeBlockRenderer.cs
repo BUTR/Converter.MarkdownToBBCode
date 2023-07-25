@@ -9,8 +9,7 @@ public class CodeBlockRenderer : BBCodeObjectRenderer<CodeBlock>
 {
     protected override void Write(BBCodeRenderer renderer, CodeBlock obj)
     {
-        if (obj.LinesBefore?.Count > 0 && obj.LinesBefore?[0].NewLine != NewLine.None) renderer.WriteLine();
-        if (!renderer.IsFirstInContainer) renderer.EnsureLine();
+        renderer.WriteLinesStart(obj);
 
         // NexusMods can't render when the code block conains the language
         //renderer.WriteLine(obj is FencedCodeBlock { Info: { } info } && !string.IsNullOrEmpty(info) ? $"[code={info}]" : "[code]");
@@ -20,8 +19,7 @@ public class CodeBlockRenderer : BBCodeObjectRenderer<CodeBlock>
         renderer.EnsureLine();
         renderer.Write("[/code]");
 
-        if (!renderer.IsLastInContainer) renderer.EnsureLine();
-        if (obj.LinesAfter?.Count > 0 && obj.LinesAfter?[0].NewLine != NewLine.None) renderer.WriteLine();
+        renderer.WriteLinesEnd(obj);
     }
 
     private void WriteLeafRawLines(BBCodeRenderer renderer, LeafBlock? leafBlock, bool writeEndOfLines)

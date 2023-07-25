@@ -11,6 +11,7 @@ namespace Converter.MarkdownToBBCode.Shared;
 public class BBCodeRenderer : TextRendererBase<BBCodeRenderer>
 {
     internal MarkdownPipeline Pipeline { get; }
+    internal bool IsNested { get; init; }
     internal bool HTMLForceNewLine { get; init; }
 
     public bool DoubleLineBreakAsNewLine { get; set; }

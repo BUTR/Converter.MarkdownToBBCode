@@ -10,22 +10,9 @@ public class TestsQuote
         const string markdown = """
 > Hello
 > World!
-""";
-        const string bbCode = """
-[quote]
-Hello
-World!
-[/quote]
-""";
-        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
-    }
 
-    [Test]
-    public void Converts_Quote_Multiple()
-    {
-        const string markdown = $"""
-> Hello
-> World!
+> Middle
+
 
 > Bye
 > World!
@@ -36,10 +23,14 @@ Hello
 World!
 [/quote]
 [quote]
+Middle
+[/quote]
+
+[quote]
 Bye
 World!
 [/quote]
 """;
-        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
 }

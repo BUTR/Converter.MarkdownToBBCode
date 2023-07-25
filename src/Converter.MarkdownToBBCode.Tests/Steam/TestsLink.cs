@@ -35,7 +35,7 @@ public class TestsLink
 [https://www.youtube.com/watch?v=ID](https://www.youtube.com/watch?v=ID)
 """;
         const string bbCode = """
-https://www.youtube.com/watch?v=ID
+[url=https://www.youtube.com/watch?v=ID]https://www.youtube.com/watch?v=ID[/url]
 """;
         Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -47,7 +47,7 @@ https://www.youtube.com/watch?v=ID
 [https://store.steampowered.com/app/323190/](https://store.steampowered.com/app/323190/)
 """;
         const string bbCode = """
-https://store.steampowered.com/app/323190/
+[url=https://store.steampowered.com/app/323190/]https://store.steampowered.com/app/323190/[/url]
 """;
         Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -59,7 +59,7 @@ https://store.steampowered.com/app/323190/
 [https://steamcommunity.com/sharedfiles/filedetails/?id=157328145](https://steamcommunity.com/sharedfiles/filedetails/?id=157328145)
 """;
         const string bbCode = """
-https://steamcommunity.com/sharedfiles/filedetails/?id=157328145
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=157328145]https://steamcommunity.com/sharedfiles/filedetails/?id=157328145[/url]
 """;
         Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
     }

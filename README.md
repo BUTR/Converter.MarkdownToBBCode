@@ -35,9 +35,11 @@ At the time of writing the tool, it was used to keep in sync the description of 
 BLSE - [GitHub](https://github.com/BUTR/Bannerlord.BLSE) -> [NexusMods](https://www.nexusmods.com/mountandblade2bannerlord/mods/1)
 
 ## Notes
-* You can ignore an HTML element by adding `converter_ignore` attribute to the element
+* You can ignore an HTML element by adding `converter_ignore`, `converter_nexusmods`, `converter_steam` attribute to the element
   ```HTML
   <p converter_ignore>WILL NOT BE CONVERTED TO BBCODE</p>
+  <p converter_nexusmods>WILL NOT BE CONVERTED TO BBCODE FOR STEAM</p>
+  <p converter_steam>WILL NOT BE CONVERTED TO BBCODE FOR NEXUSMODS</p>
   ```
 * You can set an alternative `href` for a link for NexusMods/Steam by adding a `nexusmods_href` or `steam_href` attribute to the element
   ```HTML

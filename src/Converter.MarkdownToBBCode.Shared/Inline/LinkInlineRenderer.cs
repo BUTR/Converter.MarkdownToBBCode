@@ -24,9 +24,11 @@ public class LinkInlineRenderer : BBCodeObjectRenderer<LinkInline>
                     renderer.Write(url.Substring(youtube.Length));
                     renderer.Write("[/youtube]");
                     return;
+                /* Looks like it's not working
                 case BBCodeType.Steam when url.StartsWith(youtube) || url.StartsWith(steamstore) || url.StartsWith(steamworkshop):
                     renderer.Write(url);
                     return;
+                */
                 default:
                     renderer.Write($"[url={url}]");
                     renderer.WriteChildren(link);

@@ -83,6 +83,7 @@ public class TestsList
 [*] Two Two
 [*] Three[/list]
 """;
+        var t = MarkdownNexusMods.ToBBCode(markdown);
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
 }

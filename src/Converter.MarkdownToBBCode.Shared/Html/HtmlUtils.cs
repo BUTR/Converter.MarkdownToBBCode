@@ -29,7 +29,8 @@ internal static class HtmlUtils
         using var writer = new StringWriter();
         var renderer = new BBCodeRenderer(rendererOld.BBCodeType, rendererOld.Pipeline, doubleLineBreakAsNewLine ?? rendererOld.DoubleLineBreakAsNewLine, rendererOld.HandleHTML, writer)
         {
-            HTMLForceNewLine = htmlForceNewLine
+            IsNested = true,
+            HTMLForceNewLine = htmlForceNewLine,
         };
         renderer.Render(document);
         renderer.Writer.Flush();
@@ -126,105 +127,133 @@ internal static class HtmlUtils
         }
     }
 
+    public static bool CanProcess(BBCodeRenderer renderer, string html)
+    {
+        var document = new HtmlDocument();
+        document.LoadHtml(html);
+        return CanProcess(renderer, document);
+    }
+    public static bool CanProcess(BBCodeRenderer renderer, HtmlDocument document)
+    {
+        foreach (var (_, node, isFirst, _) in document.DocumentNode.ChildNodes.Where(x => x.NodeType != HtmlNodeType.Comment).WithMetadata())
+        {
+            if (isFirst && node.Attributes["converter_ignore"] is not null) return false;
+            if (isFirst && node.Attributes["converter_steam"] is not null && renderer.BBCodeType != BBCodeType.Steam) return false;
+            if (isFirst && node.Attributes["converter_nexusmods"] is not null && renderer.BBCodeType != BBCodeType.NexusMods) return false;
+        }
+        return true;
+    }
+
     public static void ProcessHTMLDocument(BBCodeRenderer renderer, HtmlDocument document, bool isInline)
     {
         foreach (var node in document.DocumentNode.ChildNodes.Where(x => x.NodeType != HtmlNodeType.Comment))
         {
-            if (!ProcessHTMLNode(renderer, node, isInline))
-                renderer.Write(ToBBCodeReuse(RemoveOneTabulationLevel(node.InnerHtml), false, false, renderer));
+            ProcessHTMLNode(renderer, node, isInline);
         }
     }
-    private static bool ProcessHTMLNode(BBCodeRenderer renderer, HtmlNode node, bool isInline)
+    private static void ProcessHTMLNode(BBCodeRenderer renderer, HtmlNode node, bool isInline)
     {
-        if (node.Attributes["converter_ignore"] is not null) return true;
+        if (node.Attributes["converter_ignore"] is not null) return;
+        if (node.Attributes["converter_steam"] is not null && renderer.BBCodeType != BBCodeType.Steam) return;
+        if (node.Attributes["converter_nexusmods"] is not null && renderer.BBCodeType != BBCodeType.NexusMods) return;
+
         switch (node.Name)
         {
+            case "p" when node.Attributes["text"] is { Value: { } text }:
+                renderer.EnsureLine();
+                renderer.Write(ToBBCodeReuse(text, false, false, renderer));
+                return;
+
             case "br":
                 renderer.EnsureLine();
-                return true;
+                return;
             case "b":
                 WriteBBCode(renderer, isInline, true, false, "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "i":
                 WriteBBCode(renderer, isInline, true, false, "i", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "ins" or "u":
                 WriteBBCode(renderer, isInline, true, false, "u", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "s" or "strike":
                 WriteBBCode(renderer, isInline, true, false, "s", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "a" when node.Attributes["nexusmods_href"] is { Value: { } href } && renderer.BBCodeType == BBCodeType.NexusMods:
                 WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "a" when node.Attributes["steam_href"] is { Value: { } href } && renderer.BBCodeType == BBCodeType.Steam:
                 WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "a" when node.Attributes["href"] is { Value: { } href }:
                 WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "img" when node.Attributes["nexusmods_src"] is { Value: { } src } && renderer.BBCodeType == BBCodeType.NexusMods:
                 WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
-                return true;
+                return;
             case "img" when node.Attributes["steam_src"] is { Value: { } src } && renderer.BBCodeType == BBCodeType.Steam:
                 WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
-                return true;
+                return;
             case "img" when node.Attributes["src"] is { Value: { } src }:
                 WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
-                return true;
+                return;
             case "blockquote":
                 WriteBBCode(renderer, isInline, true, true, "quote", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "code":
                 WriteBBCode(renderer, isInline, true, true, "code", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "ol" when renderer.BBCodeType == BBCodeType.NexusMods:
                 WriteBBCode(renderer, isInline, true, true, "list", "=1", RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "ol" when renderer.BBCodeType == BBCodeType.Steam:
                 WriteBBCode(renderer, isInline, true, true, "olist", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "ul":
                 WriteBBCode(renderer, isInline, true, true, "list", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "li":
-                WriteBBCode(renderer, isInline, false, true, "*", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                WriteBBCode(renderer, true, false, true, "*", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                return;
             case "hr" when renderer.BBCodeType == BBCodeType.NexusMods:
                 if (!isInline) renderer.EnsureLine();
                 WriteBBCode(renderer, isInline, false, false, "line", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 if (!isInline) renderer.EnsureLine();
-                return true;
+                return;
             case "hr" when renderer.BBCodeType == BBCodeType.Steam:
                 if (!isInline) renderer.EnsureLine();
                 WriteBBCode(renderer, isInline, true, false, "hr", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 if (!isInline) renderer.EnsureLine();
-                return true;
+                return;
             case "p" or "div" when node.Attributes["align"] is { Value: { } align } && renderer.BBCodeType == BBCodeType.NexusMods:
                 WriteBBCode(renderer, isInline, true, false, align, ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case ['h', var d] when char.IsDigit(d) && renderer.BBCodeType == BBCodeType.NexusMods:
                 if (!isInline) renderer.EnsureLine();
                 WriteBBCode(renderer, isInline, true, true, "size", $"={((int) (7 - char.GetNumericValue(d)))}", RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case ['h', var d] when char.IsDigit(d) && renderer.BBCodeType == BBCodeType.Steam:
                 if (!isInline) renderer.EnsureLine();
                 WriteBBCode(renderer, isInline, true, true, $"h{d}", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             case "details" when renderer.BBCodeType == BBCodeType.NexusMods:
                 WriteBBCode(renderer, isInline, true, true, "spoiler", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
             // Only inline spoilers are supported by Steam
             case "details" when renderer.BBCodeType == BBCodeType.Steam:
                 if (!isInline && (renderer.HTMLForceNewLine || !renderer.IsFirstInContainer)) renderer.EnsureLine();
                 renderer.Write(ToBBCodeReuse(RemoveOneTabulationLevel(node.InnerHtml), false, true, renderer));
                 if (!isInline && (renderer.HTMLForceNewLine || !renderer.IsLastInContainer)) renderer.EnsureLine();
-                return true;
+                return;
             case "summary":
                 WriteBBCode(renderer, isInline, true, false, "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return true;
+                return;
+            default:
+                var content = ToBBCodeReuse(RemoveOneTabulationLevel(node.InnerHtml), false, false, renderer);
+                if (!string.IsNullOrEmpty(content))
+                    renderer.Write(content);
+                return;
         }
-        return false;
     }
 
     private static void WriteBBCode(BBCodeRenderer renderer, bool isInline, bool closeTag, bool forceNewLine, ReadOnlySpan<char> tag, ReadOnlySpan<char> additional, ReadOnlySpan<char> content)

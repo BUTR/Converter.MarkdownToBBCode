@@ -12,7 +12,10 @@ public class TestsHeading
 ## Two
 ### Three
 #### Four
+
 ##### Five
+
+
 ###### Six
 """;
         const string bbCode = """
@@ -20,7 +23,10 @@ public class TestsHeading
 [size=5]Two[/size]
 [size=4]Three[/size]
 [size=3]Four[/size]
+
 [size=2]Five[/size]
+
+
 [size=1]Six[/size]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
