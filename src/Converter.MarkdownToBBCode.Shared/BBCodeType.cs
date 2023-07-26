@@ -1,4 +1,4 @@
-namespace Converter.MarkdownToBBCode.Shared;
+﻿namespace Converter.MarkdownToBBCode.Shared;
 
 public enum BBCodeType
 {

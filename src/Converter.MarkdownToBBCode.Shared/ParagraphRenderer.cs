@@ -1,4 +1,4 @@
-using Converter.MarkdownToBBCode.Shared.Html;
+﻿using Converter.MarkdownToBBCode.Shared.Html;
 
 using Markdig.Helpers;
 using Markdig.Syntax;
