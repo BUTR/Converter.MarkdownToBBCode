@@ -45,7 +45,7 @@ BLSE - [GitHub](https://github.com/BUTR/Bannerlord.BLSE) -> [NexusMods](https://
   ```HTML
   <a href="MARKDOWN_LINK" nexusmods_href="NEXUSMODS_LINK" /> </a>
   ```
-* You can set an alternative `src` for an image for NexusMods/Steam by adding a `nexusmods_src` or `steam_href` attribute to the element
+* You can set an alternative `src` for an image for NexusMods/Steam by adding a `nexusmods_src` or `steam_src` attribute to the element
   ```HTML
   <img src="MARKDOWN_IMAGE" nexusmods_src="NEXUSMODS_IMAGE" />
   ```
