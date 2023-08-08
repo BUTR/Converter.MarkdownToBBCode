@@ -32,7 +32,8 @@ and will disable HTML conversion
 
 ## Example
 At the time of writing the tool, it was used to keep in sync the description of the BLSE mod for Bannerlord.  
-BLSE - [GitHub](https://github.com/BUTR/Bannerlord.BLSE) -> [NexusMods](https://www.nexusmods.com/mountandblade2bannerlord/mods/1)
+BLSE - [GitHub](https://github.com/BUTR/Bannerlord.BLSE) -> [NexusMods](https://www.nexusmods.com/mountandblade2bannerlord/mods/1)  
+MCM - [GitHub](https://github.com/Aragas/Bannerlord.MBOptionScreen) -> [NexusMods](https://www.nexusmods.com/mountandblade2bannerlord/mods/612) & [GitHub](https://github.com/Aragas/Bannerlord.MBOptionScreen) -> [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=2859238197)  
 
 ## Notes
 * You can ignore an HTML element by adding `converter_ignore`, `converter_nexusmods`, `converter_steam` attribute to the element
