@@ -8,6 +8,11 @@ on:
       - '**.cs'
       - '**.csproj'
 
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -31,9 +36,15 @@ jobs:
           name: packages
           path: ./packages/
 
+      - name: NuGet login (trusted publishing)
+        uses: NuGet/login@v1
+        id: nuget-login
+        with:
+          user: Aragas
+
       - name: Push to NuGet
         if: github.ref == 'refs/heads/master'
-        run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://www.nuget.org
+        run: dotnet nuget push "./packages/*.nupkg" -k ${{ steps.nuget-login.outputs.NUGET_API_KEY }} -s https://www.nuget.org
         shell: pwsh
   
       - name: Push to GPR
