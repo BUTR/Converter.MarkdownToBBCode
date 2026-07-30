@@ -108,15 +108,15 @@ internal static class HtmlUtils
                     //LineBreakInline => "</br>",
                     // Anything else (emphasis, links, code spans...) is rendered back to
                     // markdown so the HTML content re-parse can convert it (issue #39)
-                    _ => RenderInlineAsMarkdown(current),
+                    _ => RenderInlineAsMarkdown(current!),
                 });
                 if (current == htmlInlineEnd) break;
-                current = current.NextSibling;
+                current = current!.NextSibling;
             } while (true);
 
             // Write and remove anything before the HTML inlining
-            var start = obj.Inline.FirstChild;
-            while (start != htmlInlineStart)
+            var start = obj.Inline!.FirstChild;
+            while (start is not null && start != htmlInlineStart)
             {
                 var temp = start;
                 renderer.Write(start);

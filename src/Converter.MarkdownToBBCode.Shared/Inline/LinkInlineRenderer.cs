@@ -15,17 +15,15 @@ public class LinkInlineRenderer : BBCodeObjectRenderer<LinkInline>
         else
         {
             const string youtube = "https://www.youtube.com/watch?v=";
-            const string steamstore = "https://store.steampowered.com/";
-            const string steamworkshop = "https://steamcommunity.com/sharedfiles/";
             switch (renderer.BBCodeType)
             {
-                case BBCodeType.NexusMods when url.StartsWith(youtube):
+                case BBCodeType.NexusMods when url is not null && url.StartsWith(youtube):
                     renderer.Write("[youtube]");
                     renderer.Write(url.Substring(youtube.Length));
                     renderer.Write("[/youtube]");
                     return;
                 /* Looks like it's not working
-                case BBCodeType.Steam when url.StartsWith(youtube) || url.StartsWith(steamstore) || url.StartsWith(steamworkshop):
+                case BBCodeType.Steam when url.StartsWith("https://www.youtube.com/watch?v=") || url.StartsWith("https://store.steampowered.com/") || url.StartsWith("https://steamcommunity.com/sharedfiles/"):
                     renderer.Write(url);
                     return;
                 */
