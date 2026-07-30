@@ -16,6 +16,30 @@ fdfsdf [b]This is a ä blank[/b] sf
         Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }
     [Test]
+    public void Converts_HTML_LinkWithEmphasisInside()
+    {
+        const string markdown = """
+recreate the true <a href="https://example.com/watch?v=1" target="_blank">**Nordschleife**</a>.
+""";
+        const string bbCode = """
+recreate the true [url=https://example.com/watch?v=1][b]Nordschleife[/b][/url].
+""";
+        Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_HTML_LinkInsideEmphasis()
+    {
+        const string markdown = """
+recreate the true **<a href="https://example.com/watch?v=1" target="_blank">Nordschleife</a>**.
+""";
+        const string bbCode = """
+recreate the true [b][url=https://example.com/watch?v=1]Nordschleife[/url][/b].
+""";
+        Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
     public void Converts_HTML_Inline()
     {
         const string markdown = """

@@ -38,6 +38,14 @@ internal static class HtmlUtils
         return (renderer.Writer.ToString() ?? string.Empty).ReplaceLineEndings();
     }
 
+    private static string RenderInlineAsMarkdown(Markdig.Syntax.Inlines.Inline inline)
+    {
+        using var writer = new StringWriter();
+        var renderer = new Markdig.Renderers.Roundtrip.RoundtripRenderer(writer);
+        renderer.Write(inline);
+        return writer.ToString() ?? string.Empty;
+    }
+
     private static string RemoveOneTabulationLevel(string html)
     {
         var lines = html.Split(NewLine);
@@ -96,7 +104,9 @@ internal static class HtmlUtils
                     LiteralInline li => li.ToString(),
                     LineBreakInline => NewLine,
                     //LineBreakInline => "</br>",
-                    _ => throw new Exception(current?.GetType().ToString() ?? "NULL")
+                    // Anything else (emphasis, links, code spans...) is rendered back to
+                    // markdown so the HTML content re-parse can convert it (issue #39)
+                    _ => RenderInlineAsMarkdown(current),
                 });
                 if (current == htmlInlineEnd) break;
                 current = current.NextSibling;
