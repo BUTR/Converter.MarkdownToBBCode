@@ -13,6 +13,7 @@ public class BBCodeRenderer : TextRendererBase<BBCodeRenderer>
     internal MarkdownPipeline Pipeline { get; }
     internal bool IsNested { get; init; }
     internal bool HTMLForceNewLine { get; init; }
+    public string? Source { get; init; }
 
     public bool DoubleLineBreakAsNewLine { get; set; }
     public bool HandleHTML { get; set; }
@@ -29,6 +30,7 @@ public class BBCodeRenderer : TextRendererBase<BBCodeRenderer>
         BBCodeType = type;
 
         ObjectRenderers.Add(new CodeBlockRenderer());
+        ObjectRenderers.Add(new TableRenderer());
         ObjectRenderers.Add(new ListRenderer());
         ObjectRenderers.Add(new HeadingRenderer());
         ObjectRenderers.Add(new HtmlBlockRenderer());

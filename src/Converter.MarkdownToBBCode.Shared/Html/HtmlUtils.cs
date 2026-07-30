@@ -24,13 +24,15 @@ internal static class HtmlUtils
 
     private static string ToBBCodeReuse(string markdown, bool? doubleLineBreakAsNewLine, bool htmlForceNewLine, BBCodeRenderer rendererOld)
     {
-        var document = MarkdownParser.Parse(markdown.Trim('\r', '\n'), rendererOld.Pipeline);
+        var source = markdown.Trim('\r', '\n');
+        var document = MarkdownParser.Parse(source, rendererOld.Pipeline);
 
         using var writer = new StringWriter();
         var renderer = new BBCodeRenderer(rendererOld.BBCodeType, rendererOld.Pipeline, doubleLineBreakAsNewLine ?? rendererOld.DoubleLineBreakAsNewLine, rendererOld.HandleHTML, writer)
         {
             IsNested = true,
             HTMLForceNewLine = htmlForceNewLine,
+            Source = source,
         };
         renderer.Render(document);
         renderer.Writer.Flush();
