@@ -19,9 +19,9 @@ public class TestsHeading
 [h1]One[/h1]
 [h2]Two[/h2]
 [h3]Three[/h3]
-[h4]Four[/h4]
-[h5]Five[/h5]
-[h6]Six[/h6]
+[b]Four[/b]
+[b]Five[/b]
+[b]Six[/b]
 """;
         Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
     }

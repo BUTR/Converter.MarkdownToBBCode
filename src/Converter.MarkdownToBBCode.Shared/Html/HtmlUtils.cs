@@ -244,9 +244,10 @@ internal static class HtmlUtils
                 if (!isInline) renderer.EnsureLine();
                 WriteBBCode(renderer, isInline, true, true, "size", $"={((int) (7 - char.GetNumericValue(d)))}", RemoveOneTabulationLevel(node.InnerHtml));
                 return;
+            // Steam only renders [h1]-[h3], deeper levels fall back to bold
             case ['h', var d] when char.IsDigit(d) && renderer.BBCodeType == BBCodeType.Steam:
                 if (!isInline) renderer.EnsureLine();
-                WriteBBCode(renderer, isInline, true, true, $"h{d}", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                WriteBBCode(renderer, isInline, true, true, d <= '3' ? $"h{d}" : "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "details" when renderer.BBCodeType == BBCodeType.NexusMods:
                 WriteBBCode(renderer, isInline, true, true, "spoiler", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
