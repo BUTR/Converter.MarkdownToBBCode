@@ -1,4 +1,4 @@
-using Markdig.Extensions.Tables;
+﻿using Markdig.Extensions.Tables;
 
 using System.Linq;
 
