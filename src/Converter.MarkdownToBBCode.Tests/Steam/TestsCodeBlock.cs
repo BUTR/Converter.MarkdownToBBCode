@@ -51,7 +51,7 @@ public class TestsCodeBlock
 `<ItemGroup><PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" /></ItemGroup>`
 """;
         const string bbCode = """
-[b][noparse]<ItemGroup><PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" /></ItemGroup>[/noparse][/b]
+[b]<ItemGroup><PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" /></ItemGroup>[/b]
 """;
         Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -59,12 +59,13 @@ public class TestsCodeBlock
     [Test]
     public void Converts_CodeBlock_Inline_BBCodeContent()
     {
-        // [noparse] keeps literal BBCode inside a code span from being interpreted by Steam
+        // Literal BBCode passes through unescaped on BOTH platforms so a shared source
+        // fails the same way everywhere instead of silently breaking only on NexusMods
         const string markdown = """
 Use `[spoiler]` to hide content
 """;
         const string bbCode = """
-Use [b][noparse][spoiler][/noparse][/b] to hide content
+Use [b][spoiler][/b] to hide content
 """;
         Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
