@@ -47,4 +47,31 @@ This is one line
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }
+
+    [Test]
+    public void Converts_TestsParagraph_MultiLine()
+    {
+        const string markdown = """
+This is
+still one
+line
+""";
+        const string bbCode = """
+This is still one line
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_TestsParagraph_LineBreakAfterEmphasis()
+    {
+        const string markdown = """
+**This is**
+one line
+""";
+        const string bbCode = """
+[b]This is[/b] one line
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
 }
