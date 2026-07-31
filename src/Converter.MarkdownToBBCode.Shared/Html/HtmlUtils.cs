@@ -208,13 +208,16 @@ internal static class HtmlUtils
                 WriteBBCode(renderer, isInline, true, false, "s", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "a" when node.Attributes["nexusmods_href"] is { Value: { } href } && renderer.BBCodeType == BBCodeType.NexusMods:
-                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
+                // Trim so a link wrapping only an image stays compact ([url][img][/url]) instead of spanning lines
+                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml).Trim());
                 return;
             case "a" when node.Attributes["steam_href"] is { Value: { } href } && renderer.BBCodeType == BBCodeType.Steam:
-                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
+                // Trim so a link wrapping only an image stays compact ([url][img][/url]) instead of spanning lines
+                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml).Trim());
                 return;
             case "a" when node.Attributes["href"] is { Value: { } href }:
-                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
+                // Trim so a link wrapping only an image stays compact ([url][img][/url]) instead of spanning lines
+                WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml).Trim());
                 return;
             case "img" when node.Attributes["nexusmods_src"] is { Value: { } src } && renderer.BBCodeType == BBCodeType.NexusMods:
                 WriteBBCode(renderer, isInline, true, false, "img", GetImgParams(node, renderer.BBCodeType), src);

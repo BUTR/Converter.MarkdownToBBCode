@@ -191,9 +191,7 @@ You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount 
 """;
         const string bbCode = """
 [h1]Bannerlord.BLSE[/h1]
-[url=https://github.com/BUTR/Bannerlord.UIExtenderEx]
-[img]https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png[/img]
-[/url]
+[url=https://github.com/BUTR/Bannerlord.UIExtenderEx][img]https://media.discordapp.net/attachments/422092475163869201/1083742477250465843/BLSE_SMALL_SMALL.png[/img][/url]
 
 """;
         Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
