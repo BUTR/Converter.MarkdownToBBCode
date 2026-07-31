@@ -31,4 +31,29 @@ Outro.
 """;
         Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
+
+    [Test]
+    public void Blank_Line_Between_Fences_Does_Not_Leak()
+    {
+        // The removed NexusMods region leaves a blank line between its fence and the Steam fence;
+        // it must not surface as a gap between the heading and the first Steam section
+        const string markdown = """
+## FAQ
+<!-- converter_nexusmods -->
+Nexus content.
+<!-- /converter_nexusmods -->
+
+<!-- converter_steam -->
+### Steam Section
+Steam content.
+<!-- /converter_steam -->
+""";
+        const string bbCode = """
+[h2]FAQ[/h2]
+[h3]Steam Section[/h3]
+Steam content.
+
+""";
+        Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
+    }
 }
