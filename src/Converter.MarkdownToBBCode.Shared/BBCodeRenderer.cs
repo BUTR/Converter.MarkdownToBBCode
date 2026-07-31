@@ -36,6 +36,7 @@ public class BBCodeRenderer : TextRendererBase<BBCodeRenderer>
         ObjectRenderers.Add(new HtmlBlockRenderer());
         ObjectRenderers.Add(new ParagraphRenderer());
         ObjectRenderers.Add(new QuoteBlockRenderer());
+        ObjectRenderers.Add(new ThematicBreakRenderer());
 
         // Default inline renderers
         ObjectRenderers.Add(new CodeInlineRenderer());
