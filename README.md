@@ -56,6 +56,8 @@ MCM - [GitHub](https://github.com/Aragas/Bannerlord.MBOptionScreen) -> [NexusMod
   ```HTML
   <img src="MARKDOWN_IMAGE" nexusmods_src="NEXUSMODS_IMAGE" />
   ```
+* Literal BBCode-like text (e.g. `[b]`, `[spoiler]`) in plain Markdown is passed through as-is, so the platform will interpret it as BBCode. On Steam, inline code (`` `...` ``) is wrapped in `[noparse]`, keeping its content literal. NexusMods has no `[noparse]` equivalent, so avoid literal `[tags]` there outside of code blocks
+
 ## Supporting Codes
 [GitHub Markdown Supported HTML Codes](https://github.com/gjtorikian/html-pipeline/blob/a2e02ac8372da5376cde623466dfaeb0f2b2ea1c/lib/html_pipeline/sanitization_filter.rb)  
 [Steam Supported BBCode Codes](https://steamcommunity.com/comment/ForumTopic/formattinghelp)  
@@ -71,6 +73,7 @@ MCM - [GitHub](https://github.com/Aragas/Bannerlord.MBOptionScreen) -> [NexusMod
 | \[quote]TEXT\[/quote]                  | \[quote]TEXT\[/quote]              | \> TEXT                                                                   | \<blockquote>TEXT\</blockquote>                                        |
 | \[quote AUTHOR]TEXT\[/quote]           | \[quote=AUTHOR]TEXT\[/quote]       | \> TEXT                                                                   |                                                                        |
 | \[code]CODE\[/code]                    | \[code]CODE\[/code]                | \`\`\`CODE\`\`\`                                                          | \<code>CODE\</code>                                                    |
+| \[b]CODE\[/b]                          | \[b]\[noparse]CODE\[/noparse]\[/b] | \`CODE\`                                                                  |                                                                        |
 | \[list=1]\[*]ENTRY\[/list]             | \[olist]\[*]ENTRY\[/olist]         | 1. ENTRY                                                                  | \<ol>\<li>ENTRY\</li>\</ol>                                            |
 | \[list]\[*]ENTRY\[/list]               | \[list]\[*]ENTRY\[/list]           | \* ENTRY                                                                  | \<ul>\<li>ENTRY\</li>\</ul>                                            |
 | \[line]                                | \[hr]\[/hr]                        |                                                                           | \<hr/>                                                                 |
