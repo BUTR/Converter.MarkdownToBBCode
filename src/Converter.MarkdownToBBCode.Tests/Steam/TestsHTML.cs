@@ -15,6 +15,20 @@ fdfsdf [b]This is a ä blank[/b] sf
 """;
         Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }
+
+    [Test]
+    public void Converts_HTML_PlainTextEntity()
+    {
+        const string markdown = """
+Tom &amp; Jerry
+""";
+        const string bbCode = """
+Tom & Jerry
+""";
+        Assert.That(MarkdownSteam.ToBBCode(markdown), Is.EqualTo(bbCode));
+        Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
     [Test]
     public void Converts_HTML_LinkWithEmphasisInside()
     {

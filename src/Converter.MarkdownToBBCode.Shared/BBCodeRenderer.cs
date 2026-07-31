@@ -43,7 +43,7 @@ public class BBCodeRenderer : TextRendererBase<BBCodeRenderer>
         ObjectRenderers.Add(new EmphasisInlineRenderer());
         ObjectRenderers.Add(new LineBreakInlineRenderer());
         ObjectRenderers.Add(new HtmlInlineRenderer()); // Only processed when nested inside other inlines, top-level HTML is handled by ParagraphRenderer
-        //ObjectRenderers.Add(new HtmlEntityInlineRenderer());  // Will never be processed because of ParagraphRenderer
+        ObjectRenderers.Add(new HtmlEntityInlineRenderer()); // Only processed outside HTML inline runs, those are consumed by HtmlUtils.ProcessLeafBlock
         ObjectRenderers.Add(new LinkInlineRenderer());
         ObjectRenderers.Add(new LiteralInlineRenderer());
     }
