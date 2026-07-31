@@ -42,6 +42,12 @@ MCM - [GitHub](https://github.com/Aragas/Bannerlord.MBOptionScreen) -> [NexusMod
   <p converter_nexusmods>WILL NOT BE CONVERTED TO BBCODE FOR STEAM</p>
   <p converter_steam>WILL NOT BE CONVERTED TO BBCODE FOR NEXUSMODS</p>
   ```
+* You can scope a region of plain Markdown to a platform with HTML-comment fences (invisible on GitHub, so the content stays Markdown - no HTML wrapping needed)
+  ```Markdown
+  <!-- converter_ignore -->NOT CONVERTED TO BBCODE<!-- /converter_ignore -->
+  <!-- converter_nexusmods -->ONLY CONVERTED FOR NEXUSMODS<!-- /converter_nexusmods -->
+  <!-- converter_steam -->ONLY CONVERTED FOR STEAM<!-- /converter_steam -->
+  ```
 * You can set an alternative `href` for a link for NexusMods/Steam by adding a `nexusmods_href` or `steam_href` attribute to the element
   ```HTML
   <a href="MARKDOWN_LINK" nexusmods_href="NEXUSMODS_LINK" /> </a>

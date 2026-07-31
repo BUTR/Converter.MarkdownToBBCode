@@ -14,6 +14,7 @@ public static class MarkdownSteam
     {
         var pipeline = new MarkdownPipelineBuilder().EnableTrackTrivia().UsePipeTables().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
 
+        markdown = ConverterMarkers.Apply(markdown, BBCodeType.Steam);
         var document = MarkdownParser.Parse(markdown, pipeline);
 
         using var writer = new StringWriter();
@@ -28,6 +29,7 @@ public static class MarkdownSteam
     {
         var pipeline = new MarkdownPipelineBuilder().EnableTrackTrivia().UsePipeTables().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
 
+        markdown = ConverterMarkers.Apply(markdown, BBCodeType.Steam);
         var document = MarkdownParser.Parse(markdown, pipeline);
 
         using var writer = new StringWriter();
