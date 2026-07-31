@@ -27,9 +27,9 @@ internal static class RenderExtensions
     public static void WriteLinesStart(this BBCodeRenderer renderer, Block block)
     {
         var idx = block.Parent?.IndexOf(block);
-        var nextElement = idx is null or <= 0 ? null : block.Parent?[idx.Value - 1];
-        var isHtml = nextElement is HtmlBlock;
-        var isRenderedHtml = nextElement is HtmlBlock htmlBlock && HtmlUtils.CanProcess(renderer, htmlBlock.Lines.ToSlice().AsSpan().ToString());
+        var previousBlock = idx is null or <= 0 ? null : block.Parent?[idx.Value - 1];
+        var isHtml = previousBlock is HtmlBlock;
+        var isRenderedHtml = previousBlock is HtmlBlock htmlBlock && HtmlUtils.CanProcess(renderer, htmlBlock.Lines.ToSlice().AsSpan().ToString());
 
         if ((!isHtml || isRenderedHtml)) renderer.WriteLinesBefore(block);
         if ((!isHtml || isRenderedHtml) && !renderer.IsFirstInContainer) renderer.EnsureLine();
