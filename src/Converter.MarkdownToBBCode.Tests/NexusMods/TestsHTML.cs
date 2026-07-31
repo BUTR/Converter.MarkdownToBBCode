@@ -131,6 +131,27 @@ recreate the true [b][url=https://example.com/watch?v=1]Nordschleife[/url][/b].
     }
 
     [Test]
+    public void Converts_HTML_HeadingThenContentAsLastBlock()
+    {
+        // A trailing platform block whose heading is followed by content must not glue them together
+        const string markdown = """
+Intro.
+
+<p converter_nexusmods>
+  <h3>Crashes on Vortex</h3>
+  <p>Check <a href="https://example.com">this comment</a></p>
+</p>
+""";
+        const string bbCode = """
+Intro.
+
+[size=4]Crashes on Vortex[/size]
+Check [url=https://example.com]this comment[/url]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
     public void Converts_HTML_Underscore()
     {
         const string markdown = """

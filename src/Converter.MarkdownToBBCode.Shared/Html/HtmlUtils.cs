@@ -179,6 +179,16 @@ internal static class HtmlUtils
             ProcessHTMLNode(renderer, node, isInline);
         }
     }
+    private static bool HasFollowingContent(HtmlNode node)
+    {
+        for (var next = node.NextSibling; next is not null; next = next.NextSibling)
+        {
+            if (next.NodeType == HtmlNodeType.Element) return true;
+            if (next.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(next.InnerText)) return true;
+        }
+        return false;
+    }
+
     private static void ProcessHTMLNode(BBCodeRenderer renderer, HtmlNode node, bool isInline)
     {
         if (node.Attributes["converter_ignore"] is not null) return;
@@ -268,11 +278,14 @@ internal static class HtmlUtils
             case ['h', var d] when char.IsDigit(d) && renderer.BBCodeType == BBCodeType.NexusMods:
                 if (!isInline) renderer.EnsureLine();
                 WriteBBCode(renderer, isInline, true, true, "size", $"={((int) (7 - char.GetNumericValue(d)))}", RemoveOneTabulationLevel(node.InnerHtml));
+                // Separate the heading from following content it would otherwise be glued to (last-in-container case)
+                if (!isInline && HasFollowingContent(node)) renderer.EnsureLine();
                 return;
             // Steam only renders [h1]-[h3], deeper levels fall back to bold
             case ['h', var d] when char.IsDigit(d) && renderer.BBCodeType == BBCodeType.Steam:
                 if (!isInline) renderer.EnsureLine();
                 WriteBBCode(renderer, isInline, true, true, d <= '3' ? $"h{d}" : "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                if (!isInline && HasFollowingContent(node)) renderer.EnsureLine();
                 return;
             case "details" when renderer.BBCodeType == BBCodeType.NexusMods:
                 // Trim so the content hugs [spoiler]; a leading newline renders an empty first line
