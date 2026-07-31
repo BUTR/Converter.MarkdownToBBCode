@@ -39,4 +39,28 @@ public class TestsLink
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
+
+    [Test]
+    public void Converts_LinkYoutube_ExtraQueryParams()
+    {
+        const string markdown = """
+[video](https://www.youtube.com/watch?v=ID&t=30s)
+""";
+        const string bbCode = """
+[youtube]ID[/youtube]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_LinkYoutube_ShortUrl()
+    {
+        const string markdown = """
+[video](https://youtu.be/ID?t=30)
+""";
+        const string bbCode = """
+[youtube]ID[/youtube]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
+    }
 }
