@@ -11,12 +11,15 @@ public class CodeBlockRenderer : BBCodeObjectRenderer<CodeBlock>
     {
         renderer.WriteLinesStart(obj);
 
+        // NexusMods renders a newline after [code] as an empty first line, so hug the content
+        var hug = renderer.BBCodeType == BBCodeType.NexusMods;
+
         // NexusMods can't render when the code block conains the language
         //renderer.WriteLine(obj is FencedCodeBlock { Info: { } info } && !string.IsNullOrEmpty(info) ? $"[code={info}]" : "[code]");
         renderer.Write("[code]");
-        renderer.EnsureLine();
-        WriteLeafRawLines(renderer, obj, true);
-        renderer.EnsureLine();
+        if (!hug) renderer.EnsureLine();
+        WriteLeafRawLines(renderer, obj, !hug);
+        if (!hug) renderer.EnsureLine();
         renderer.Write("[/code]");
 
         renderer.WriteLinesEnd(obj);

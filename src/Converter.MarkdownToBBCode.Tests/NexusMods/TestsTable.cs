@@ -35,11 +35,9 @@ Date | Version
 </details>
 """;
         const string bbCode = """
-[spoiler]
-[b]2023[/b]
+[spoiler][b]2023[/b]
 [b]Date | Version[/b]
-23/08/2023 | 4.2.0
-[/spoiler]
+23/08/2023 | 4.2.0[/spoiler]
 
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));

@@ -272,7 +272,8 @@ internal static class HtmlUtils
                 WriteBBCode(renderer, isInline, true, true, d <= '3' ? $"h{d}" : "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "details" when renderer.BBCodeType == BBCodeType.NexusMods:
-                WriteBBCode(renderer, isInline, true, true, "spoiler", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                // Trim so the content hugs [spoiler]; a leading newline renders an empty first line
+                WriteBBCode(renderer, isInline, true, true, "spoiler", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml).Trim());
                 return;
             // Only inline spoilers are supported by Steam
             case "details" when renderer.BBCodeType == BBCodeType.Steam:
