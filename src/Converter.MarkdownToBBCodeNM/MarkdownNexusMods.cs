@@ -1,42 +1,10 @@
-﻿using Converter.MarkdownToBBCode.Shared;
-
-using Markdig;
-using Markdig.Extensions.EmphasisExtras;
-using Markdig.Parsers;
-
-using System.IO;
+using Converter.MarkdownToBBCode.Shared;
 
 namespace Converter.MarkdownToBBCodeNM;
 
 public static class MarkdownNexusMods
 {
-    public static string ToBBCode(string markdown)
-    {
-        var pipeline = new MarkdownPipelineBuilder().EnableTrackTrivia().UsePipeTables().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
+    public static string ToBBCode(string markdown) => BBCodeConverter.Convert(markdown, BBCodeType.NexusMods, extended: false);
 
-        markdown = ConverterMarkers.Apply(markdown, BBCodeType.NexusMods);
-        var document = MarkdownParser.Parse(markdown, pipeline);
-
-        using var writer = new StringWriter();
-        var renderer = new BBCodeRenderer(BBCodeType.NexusMods, pipeline, false, false, writer) { Source = markdown };
-        renderer.Render(document);
-        renderer.Writer.Flush();
-
-        return (renderer.Writer.ToString() ?? string.Empty).ReplaceLineEndings();
-    }
-
-    public static string ToBBCodeExtended(string markdown)
-    {
-        var pipeline = new MarkdownPipelineBuilder().EnableTrackTrivia().UsePipeTables().UseEmphasisExtras(EmphasisExtraOptions.Strikethrough).Build();
-
-        markdown = ConverterMarkers.Apply(markdown, BBCodeType.NexusMods);
-        var document = MarkdownParser.Parse(markdown, pipeline);
-
-        using var writer = new StringWriter();
-        var renderer = new BBCodeRenderer(BBCodeType.NexusMods, pipeline, true, true, writer) { Source = markdown };
-        renderer.Render(document);
-        renderer.Writer.Flush();
-
-        return (renderer.Writer.ToString() ?? string.Empty).ReplaceLineEndings();
-    }
+    public static string ToBBCodeExtended(string markdown) => BBCodeConverter.Convert(markdown, BBCodeType.NexusMods, extended: true);
 }
