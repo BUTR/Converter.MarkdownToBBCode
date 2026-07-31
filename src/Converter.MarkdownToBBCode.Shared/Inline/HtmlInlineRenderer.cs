@@ -35,7 +35,7 @@ public class HtmlInlineRenderer : BBCodeObjectRenderer<HtmlInline>
                     renderer.Write("[/u]");
                     return;
                 case "s" or "strike":
-                    renderer.Write("[/s]");
+                    renderer.Write($"[/{renderer.BBCodeType.StrikeTag()}]");
                     return;
                 case "a":
                     renderer.Write("[/url]");
@@ -64,7 +64,7 @@ public class HtmlInlineRenderer : BBCodeObjectRenderer<HtmlInline>
                 renderer.Write("[u]");
                 return;
             case "s" or "strike":
-                renderer.Write("[s]");
+                renderer.Write($"[{renderer.BBCodeType.StrikeTag()}]");
                 return;
             case "a" when node.Attributes["nexusmods_href"] is { Value: { } href } && renderer.BBCodeType == BBCodeType.NexusMods:
                 renderer.Write($"[url={href}]");

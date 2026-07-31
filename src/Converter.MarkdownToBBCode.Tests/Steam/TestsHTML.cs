@@ -96,6 +96,54 @@ dfgdfg
     }
 
     [Test]
+    public void Converts_HTML_Strike()
+    {
+        const string markdown = """
+<s>dfgdfg</s>
+
+<s><div>dfgdfg</div></s>
+
+<strike>dfgdfg</strike>
+""";
+        const string bbCode = """
+[strike]dfgdfg[/strike]
+
+[strike]dfgdfg[/strike]
+
+[strike]dfgdfg[/strike]
+""";
+        Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_HTML_StrikeNested()
+    {
+        const string markdown = """
+**A <s>B</s>**
+""";
+        const string bbCode = """
+[b]A [strike]B[/strike][/b]
+""";
+        Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_HTML_StrongEm()
+    {
+        const string markdown = """
+<strong>dfgdfg</strong>
+
+<em>dfgdfg</em>
+""";
+        const string bbCode = """
+[b]dfgdfg[/b]
+
+[i]dfgdfg[/i]
+""";
+        Assert.That(MarkdownSteam.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
     public void Converts_HTML_UnderscoreNested()
     {
         const string markdown = """

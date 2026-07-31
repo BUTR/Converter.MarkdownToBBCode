@@ -18,15 +18,10 @@ public class EmphasisInlineRenderer : BBCodeObjectRenderer<EmphasisInline>
                 renderer.WriteChildren(obj);
                 renderer.Write("[/i]");
                 break;
-            case { DelimiterChar: '~', DelimiterCount: 2 } when renderer.BBCodeType is BBCodeType.NexusMods:
-                renderer.Write("[s]");
+            case { DelimiterChar: '~', DelimiterCount: 2 }:
+                renderer.Write($"[{renderer.BBCodeType.StrikeTag()}]");
                 renderer.WriteChildren(obj);
-                renderer.Write("[/s]");
-                break;
-            case { DelimiterChar: '~', DelimiterCount: 2 } when renderer.BBCodeType is BBCodeType.Steam:
-                renderer.Write("[strike]");
-                renderer.WriteChildren(obj);
-                renderer.Write("[/strike]");
+                renderer.Write($"[/{renderer.BBCodeType.StrikeTag()}]");
                 break;
             default:
                 renderer.WriteChildren(obj);

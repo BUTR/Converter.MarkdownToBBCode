@@ -205,17 +205,17 @@ internal static class HtmlUtils
             case "br":
                 renderer.EnsureLine();
                 return;
-            case "b":
+            case "b" or "strong":
                 WriteBBCode(renderer, isInline, true, false, "b", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
-            case "i":
+            case "i" or "em":
                 WriteBBCode(renderer, isInline, true, false, "i", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "ins" or "u":
                 WriteBBCode(renderer, isInline, true, false, "u", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "s" or "strike":
-                WriteBBCode(renderer, isInline, true, false, "s", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                WriteBBCode(renderer, isInline, true, false, renderer.BBCodeType.StrikeTag(), ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "a" when node.Attributes["nexusmods_href"] is { Value: { } href } && renderer.BBCodeType == BBCodeType.NexusMods:
                 // Trim so a link wrapping only an image stays compact ([url][img][/url]) instead of spanning lines

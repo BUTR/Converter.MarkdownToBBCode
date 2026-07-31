@@ -215,6 +215,34 @@ dfgdfg
     }
 
     [Test]
+    public void Converts_HTML_StrikeNested()
+    {
+        const string markdown = """
+**A <s>B</s>**
+""";
+        const string bbCode = """
+[b]A [s]B[/s][/b]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
+    public void Converts_HTML_StrongEm()
+    {
+        const string markdown = """
+<strong>dfgdfg</strong>
+
+<em>dfgdfg</em>
+""";
+        const string bbCode = """
+[b]dfgdfg[/b]
+
+[i]dfgdfg[/i]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
     public void Converts_HTML_UnderscoreNested()
     {
         const string markdown = """
