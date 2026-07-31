@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 
 using System;
 using System.IO;
@@ -20,33 +20,27 @@ public class ConvertOptions
 
 public static class Program
 {
-    public static void Main(string[] args)
+    public static int Main(string[] args)
     {
-        var parser = Parser.Default
-            .ParseArguments<ConvertOptions>(args);
-        parser = parser
-            .WithParsed<ConvertOptions>(o =>
+        return Parser.Default
+            .ParseArguments<ConvertOptions>(args)
+            .MapResult(Convert, _ =>
             {
-                if (File.Exists(o.Input))
-                {
-                    var content = File.ReadAllText(o.Input);
-                    var bbcode = o.DisableExtendedFeatures ? MarkdownSteam.ToBBCode(content) : MarkdownSteam.ToBBCodeExtended(content);
-                    if (!string.IsNullOrEmpty(o.OutputFilePath))
-                        File.WriteAllText(o.OutputFilePath, bbcode);
-                    else
-                        Console.Write(bbcode);
-                }
-                else
-                {
-                    var bbcode = o.DisableExtendedFeatures ? MarkdownSteam.ToBBCode(o.Input) : MarkdownSteam.ToBBCodeExtended(o.Input);
-                    if (!string.IsNullOrEmpty(o.OutputFilePath))
-                        File.WriteAllText(o.OutputFilePath, bbcode);
-                    else
-                        Console.Write(bbcode);
-                }
-
+                Console.Write("INVALID COMMAND");
+                return 1;
             });
-        parser = parser
-            .WithNotParsed(e => { Console.Write("INVALID COMMAND"); });
+    }
+
+    private static int Convert(ConvertOptions o)
+    {
+        var content = File.Exists(o.Input) ? File.ReadAllText(o.Input) : o.Input;
+        var bbcode = o.DisableExtendedFeatures ? MarkdownSteam.ToBBCode(content) : MarkdownSteam.ToBBCodeExtended(content);
+
+        if (!string.IsNullOrEmpty(o.OutputFilePath))
+            File.WriteAllText(o.OutputFilePath, bbcode);
+        else
+            Console.Write(bbcode);
+
+        return 0;
     }
 }
