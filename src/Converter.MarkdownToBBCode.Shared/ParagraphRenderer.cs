@@ -41,10 +41,10 @@ public class ParagraphRenderer : BBCodeObjectRenderer<ParagraphBlock>
 
     protected override void Write(BBCodeRenderer renderer, ParagraphBlock obj)
     {
-        // NexusMods renders a blank line as <br><br>; a blank line between a heading/list
-        // and its adjacent paragraph adds a spurious gap, so collapse it to a single newline.
-        var suppressBefore = renderer.BBCodeType == BBCodeType.NexusMods && Sibling(obj, -1) is HeadingBlock;
-        var suppressAfter = renderer.BBCodeType == BBCodeType.NexusMods && Sibling(obj, +1) is ListBlock;
+        // Both platforms render a blank line as a paragraph break; a blank line between a
+        // heading/list and its adjacent paragraph adds a spurious gap, so collapse it.
+        var suppressBefore = Sibling(obj, -1) is HeadingBlock;
+        var suppressAfter = Sibling(obj, +1) is ListBlock;
 
         // Not sure if I'm right here
         if (obj.Parent is MarkdownDocument && !suppressBefore) renderer.WriteLinesBefore(obj);
