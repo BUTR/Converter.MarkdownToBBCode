@@ -389,12 +389,12 @@ sdf
 </ul>
 """;
         const string bbCode = """
-[ol]
-[li]sfsdf[/li]
-[/ol]
-[ul]
-[li]sfsdf[/li]
-[/ul]
+[list=1]
+[*]sfsdf
+[/list]
+[list]
+[*]sfsdf
+[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }
@@ -558,8 +558,8 @@ Check Harmony's Troubleshooting for more info on how to fix it.
         const string bbCode = """
 [size=5]FAQ[/size]
 [size=4]How do I install it?[/size]
-[ol]
-[li]Find the Modules folder in your Bannerlord installation location. For Steam users, this is usually here: [code]C:\Program Files (x86)\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules[/code][/li][li]Download the latest version of this mod and drop the folder inside Modules from the archive into your game's [code]Modules[/code] folder.[/li][li]Start the Mount & Blade II: Bannerlord launcher and select all Mod Configuration Menu mods to be loaded.[/li][/ol]
+[list=1]
+[*]Find the Modules folder in your Bannerlord installation location. For Steam users, this is usually here: [code]C:\Program Files (x86)\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules[/code][*]Download the latest version of this mod and drop the folder inside Modules from the archive into your game's [code]Modules[/code] folder.[*]Start the Mount & Blade II: Bannerlord launcher and select all Mod Configuration Menu mods to be loaded.[/list]
 [spoiler][b]Your Modules folder structure should look something like this:[/b]
 [img]https://cdn.discordapp.com/attachments/753640646253740073/858635739528429568/unknown.png[/img]
 [/spoiler]

@@ -245,19 +245,13 @@ internal static class HtmlUtils
                 WriteBBCode(renderer, isInline, true, true, "code", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "ol" when renderer.BBCodeType == BBCodeType.NexusMods:
-                WriteBBCode(renderer, isInline, true, true, "ol", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                WriteBBCode(renderer, isInline, true, true, "list", "=1", RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "ol" when renderer.BBCodeType == BBCodeType.Steam:
                 WriteBBCode(renderer, isInline, true, true, "olist", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
-            case "ul" when renderer.BBCodeType == BBCodeType.NexusMods:
-                WriteBBCode(renderer, isInline, true, true, "ul", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return;
             case "ul":
                 WriteBBCode(renderer, isInline, true, true, "list", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
-                return;
-            case "li" when renderer.BBCodeType == BBCodeType.NexusMods:
-                WriteBBCode(renderer, true, true, true, "li", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "li":
                 WriteBBCode(renderer, true, false, true, "*", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));

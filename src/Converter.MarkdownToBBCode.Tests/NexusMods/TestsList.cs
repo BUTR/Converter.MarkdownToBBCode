@@ -13,11 +13,10 @@ public class TestsList
 3. Three
 """;
         const string bbCode = """
-[ol]
-[li] One[/li]
-[li] Two[/li]
-[li] Three[/li]
-[/ol]
+[list=1]
+[*] One
+[*] Two
+[*] Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -31,11 +30,10 @@ public class TestsList
 * Three
 """;
         const string bbCode = """
-[ul]
-[li] One[/li]
-[li] Two[/li]
-[li] Three[/li]
-[/ul]
+[list]
+[*] One
+[*] Two
+[*] Three[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -53,10 +51,9 @@ It provides options:
 """;
         const string bbCode = """
 It provides options:
-[ul]
-[li] Bool[/li]
-[li] Int[/li]
-[/ul]
+[list]
+[*] Bool
+[*] Int[/list]
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
@@ -83,33 +80,27 @@ It provides options:
 
 """;
         const string bbCode = """
-[ul]
-[li] One
-[ul]
-[li] One One[/li]
-[li] One Two[/li]
-[/ul][/li]
-[li] Two
-[ol]
-[li] Two One[/li]
-[li] Two Two[/li]
-[/ol][/li]
-[li] Three
-[/li]
-[/ul]
-[ol]
-[li] One[/li]
-[/ol]
-[ul]
-[li] One One[/li]
-[li] One Two[/li]
-[/ul]
-[ol]
-[li] Two[/li]
-[li] Two One[/li]
-[li] Two Two[/li]
-[li] Three[/li]
-[/ol]
+[list]
+[*] One
+[list]
+[*] One One
+[*] One Two[/list]
+[*] Two
+[list=1]
+[*] Two One
+[*] Two Two[/list]
+[*] Three
+[/list]
+[list=1]
+[*] One[/list]
+[list]
+[*] One One
+[*] One Two[/list]
+[list=1]
+[*] Two
+[*] Two One
+[*] Two Two
+[*] Three[/list]
 """;
         var t = MarkdownNexusMods.ToBBCode(markdown);
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));

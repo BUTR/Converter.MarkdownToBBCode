@@ -14,17 +14,17 @@ public class ListRenderer : BBCodeObjectRenderer<ListBlock>
         switch (renderer.BBCodeType)
         {
             case BBCodeType.NexusMods:
-                renderer.Write(obj.IsOrdered ? "[ol]" : "[ul]");
+                renderer.Write(obj.IsOrdered ? "[list=1]" : "[list]");
                 for (var i = 0; i < obj.Count; i++)
                 {
                     var listItem = (ListItemBlock) obj[i];
                     renderer.EnsureLine();
-                    renderer.Write("[li]");
+                    renderer.Write("[*]");
                     renderer.WriteChildren(listItem);
-                    renderer.Write("[/li]");
+                    // Don't add newline to the last item because it breaks NexusMods nested list rendering
+                    if (i != obj.Count - 1) renderer.EnsureLine();
                 }
-                renderer.EnsureLine();
-                renderer.Write(obj.IsOrdered ? "[/ol]" : "[/ul]");
+                renderer.Write("[/list]");
                 break;
             case BBCodeType.Steam:
                 renderer.Write(obj.IsOrdered ? "[olist]" : "[list]");
