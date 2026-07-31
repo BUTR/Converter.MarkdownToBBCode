@@ -45,6 +45,27 @@ dfgdfg
     }
 
     [Test]
+    public void Converts_HTML_AlignSplitByBlankLine()
+    {
+        // A blank line inside <p align> splits the HTML block; the wrapping must survive
+        const string markdown = """
+<p align="center">
+  <img src="https://example.com/a.png">
+
+  <a href="https://example.com">link</a>
+</p>
+""";
+        const string bbCode = """
+[center]
+[img]https://example.com/a.png[/img]
+[url=https://example.com]link[/url]
+[/center]
+
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
     public void Converts_HTML_AlignInline()
     {
         const string markdown = """
