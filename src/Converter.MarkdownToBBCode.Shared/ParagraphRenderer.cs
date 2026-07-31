@@ -32,10 +32,22 @@ public class ParagraphRenderer : BBCodeObjectRenderer<ParagraphBlock>
         }
     }
 
+    private static Block? Sibling(Block block, int offset)
+    {
+        if (block.Parent is not { } parent) return null;
+        var idx = parent.IndexOf(block) + offset;
+        return idx >= 0 && idx < parent.Count ? parent[idx] : null;
+    }
+
     protected override void Write(BBCodeRenderer renderer, ParagraphBlock obj)
     {
+        // NexusMods renders a blank line as <br><br>; a blank line between a heading/list
+        // and its adjacent paragraph adds a spurious gap, so collapse it to a single newline.
+        var suppressBefore = renderer.BBCodeType == BBCodeType.NexusMods && Sibling(obj, -1) is HeadingBlock;
+        var suppressAfter = renderer.BBCodeType == BBCodeType.NexusMods && Sibling(obj, +1) is ListBlock;
+
         // Not sure if I'm right here
-        if (obj.Parent is MarkdownDocument) renderer.WriteLinesBefore(obj);
+        if (obj.Parent is MarkdownDocument && !suppressBefore) renderer.WriteLinesBefore(obj);
         if (obj.Parent is MarkdownDocument && !renderer.IsFirstInContainer) renderer.EnsureLine();
 
         ProcessDoubleLineBreak(renderer, obj);
@@ -48,6 +60,6 @@ public class ParagraphRenderer : BBCodeObjectRenderer<ParagraphBlock>
         // Not sure if I'm right here
         if (obj.Parent is MarkdownDocument && !renderer.IsLastInContainer) renderer.EnsureLine();
         if (obj.Parent is MarkdownDocument && obj.NewLine != NewLine.None) renderer.EnsureLine();
-        if (obj.Parent is MarkdownDocument or ListItemBlock && !renderer.IsNested) renderer.WriteLinesAfter(obj);
+        if (obj.Parent is MarkdownDocument or ListItemBlock && !renderer.IsNested && !suppressAfter) renderer.WriteLinesAfter(obj);
     }
 }

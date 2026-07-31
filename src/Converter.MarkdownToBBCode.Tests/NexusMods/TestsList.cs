@@ -42,6 +42,26 @@ public class TestsList
 
 
     [Test]
+    public void Converts_List_NoBlankLineBeforeList()
+    {
+        // A blank line before a list (lint-required) must not become a rendered gap
+        const string markdown = """
+It provides options:
+
+* Bool
+* Int
+""";
+        const string bbCode = """
+It provides options:
+[ul]
+[li] Bool[/li]
+[li] Int[/li]
+[/ul]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
     public void Converts_ListNested()
     {
         const string markdown = $"""

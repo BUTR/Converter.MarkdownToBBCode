@@ -31,4 +31,20 @@ public class TestsHeading
 """;
         Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
     }
+
+    [Test]
+    public void Converts_Heading_NoBlankLineBeforeFollowingText()
+    {
+        // A blank line after a heading (lint-required) must not become a rendered gap
+        const string markdown = """
+### Crashes with Vortex
+
+Check this comment.
+""";
+        const string bbCode = """
+[size=4]Crashes with Vortex[/size]
+Check this comment.
+""";
+        Assert.That(MarkdownNexusMods.ToBBCode(markdown), Is.EqualTo(bbCode));
+    }
 }
