@@ -1,4 +1,6 @@
-﻿using HtmlAgilityPack;
+﻿using Converter.MarkdownToBBCode.Shared.Html;
+
+using HtmlAgilityPack;
 
 using Markdig.Syntax.Inlines;
 
@@ -74,13 +76,13 @@ public class HtmlInlineRenderer : BBCodeObjectRenderer<HtmlInline>
                 renderer.Write($"[url={href}]");
                 return;
             case "img" when node.Attributes["nexusmods_src"] is { Value: { } src } && renderer.BBCodeType == BBCodeType.NexusMods:
-                renderer.Write($"[img]{src}[/img]");
+                renderer.Write($"[img{HtmlUtils.GetImgParams(node, renderer.BBCodeType)}]{src}[/img]");
                 return;
             case "img" when node.Attributes["steam_src"] is { Value: { } src } && renderer.BBCodeType == BBCodeType.Steam:
                 renderer.Write($"[img]{src}[/img]");
                 return;
             case "img" when node.Attributes["src"] is { Value: { } src }:
-                renderer.Write($"[img]{src}[/img]");
+                renderer.Write($"[img{HtmlUtils.GetImgParams(node, renderer.BBCodeType)}]{src}[/img]");
                 return;
             default:
                 return;

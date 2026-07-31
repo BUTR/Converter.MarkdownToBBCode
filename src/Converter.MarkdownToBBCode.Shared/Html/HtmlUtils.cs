@@ -40,6 +40,22 @@ internal static class HtmlUtils
         return (renderer.Writer.ToString() ?? string.Empty).ReplaceLineEndings();
     }
 
+    // NexusMods [img] supports optional dimensions: [img width=W,height=H]URL[/img]
+    internal static string GetImgParams(HtmlNode node, BBCodeType type)
+    {
+        if (type != BBCodeType.NexusMods) return string.Empty;
+
+        var width = node.Attributes["width"]?.Value;
+        var height = node.Attributes["height"]?.Value;
+        return (width, height) switch
+        {
+            (not null, not null) => $" width={width},height={height}",
+            (not null, null) => $" width={width}",
+            (null, not null) => $" height={height}",
+            _ => string.Empty,
+        };
+    }
+
     private static string RenderInlineAsMarkdown(Markdig.Syntax.Inlines.Inline inline)
     {
         using var writer = new StringWriter();
@@ -201,13 +217,13 @@ internal static class HtmlUtils
                 WriteBBCode(renderer, isInline, true, false, "url", $"={href}", RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "img" when node.Attributes["nexusmods_src"] is { Value: { } src } && renderer.BBCodeType == BBCodeType.NexusMods:
-                WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
+                WriteBBCode(renderer, isInline, true, false, "img", GetImgParams(node, renderer.BBCodeType), src);
                 return;
             case "img" when node.Attributes["steam_src"] is { Value: { } src } && renderer.BBCodeType == BBCodeType.Steam:
                 WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
                 return;
             case "img" when node.Attributes["src"] is { Value: { } src }:
-                WriteBBCode(renderer, isInline, true, false, "img", ReadOnlySpan<char>.Empty, src);
+                WriteBBCode(renderer, isInline, true, false, "img", GetImgParams(node, renderer.BBCodeType), src);
                 return;
             case "blockquote":
                 WriteBBCode(renderer, isInline, true, true, "quote", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
@@ -216,13 +232,19 @@ internal static class HtmlUtils
                 WriteBBCode(renderer, isInline, true, true, "code", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "ol" when renderer.BBCodeType == BBCodeType.NexusMods:
-                WriteBBCode(renderer, isInline, true, true, "list", "=1", RemoveOneTabulationLevel(node.InnerHtml));
+                WriteBBCode(renderer, isInline, true, true, "ol", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "ol" when renderer.BBCodeType == BBCodeType.Steam:
                 WriteBBCode(renderer, isInline, true, true, "olist", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
+            case "ul" when renderer.BBCodeType == BBCodeType.NexusMods:
+                WriteBBCode(renderer, isInline, true, true, "ul", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                return;
             case "ul":
                 WriteBBCode(renderer, isInline, true, true, "list", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
+                return;
+            case "li" when renderer.BBCodeType == BBCodeType.NexusMods:
+                WriteBBCode(renderer, true, true, true, "li", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));
                 return;
             case "li":
                 WriteBBCode(renderer, true, false, true, "*", ReadOnlySpan<char>.Empty, RemoveOneTabulationLevel(node.InnerHtml));

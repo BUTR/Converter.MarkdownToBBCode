@@ -98,6 +98,18 @@ recreate the true [b][url=https://example.com/watch?v=1]Nordschleife[/url][/b].
     }
 
     [Test]
+    public void Converts_HTML_ImageDimensions()
+    {
+        const string markdown = """
+<img src="https://example.com/image.png" width="234" height="234">
+""";
+        const string bbCode = """
+[img width=234,height=234]https://example.com/image.png[/img]
+""";
+        Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
+    }
+
+    [Test]
     public void Converts_HTML_Underscore()
     {
         const string markdown = """
@@ -238,9 +250,9 @@ Something small enough to escape casual notice.
 [spoiler]
 [b]Xbox Game Pass PC[/b]
 You need to copy content of '/bin/Gaming.Desktop.x64_Shipping_Client' from BLSE to 'Mount & Blade II- Bannerlord/Content/bin/Gaming.Desktop.x64_Shipping_Client'
-[img]https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png[/img]
+[img width=500]https://media.discordapp.net/attachments/422092475163869201/1088721252702765126/image.png[/img]
 You need to copy content of 'Modules/Bannerlord.Harmony' from Harmony to 'Mount & Blade II- Bannerlord/Content/Modules/Bannerlord.Harmony'
-[img]https://media.discordapp.net/attachments/422092475163869201/1088721253692616775/image.png[/img]
+[img width=500]https://media.discordapp.net/attachments/422092475163869201/1088721253692616775/image.png[/img]
 
 [/spoiler]
 """;
@@ -343,12 +355,12 @@ sdf
 </ul>
 """;
         const string bbCode = """
-[list=1]
-[*]sfsdf
-[/list]
-[list]
-[*]sfsdf
-[/list]
+[ol]
+[li]sfsdf[/li]
+[/ol]
+[ul]
+[li]sfsdf[/li]
+[/ul]
 """;
         Assert.That(MarkdownNexusMods.ToBBCodeExtended(markdown), Is.EqualTo(bbCode));
     }
@@ -512,8 +524,8 @@ Check Harmony's Troubleshooting for more info on how to fix it.
         const string bbCode = """
 [size=5]FAQ[/size]
 [size=4]How do I install it?[/size]
-[list=1]
-[*]Find the Modules folder in your Bannerlord installation location. For Steam users, this is usually here: [code]C:\Program Files (x86)\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules[/code][*]Download the latest version of this mod and drop the folder inside Modules from the archive into your game's [code]Modules[/code] folder.[*]Start the Mount & Blade II: Bannerlord launcher and select all Mod Configuration Menu mods to be loaded.[/list]
+[ol]
+[li]Find the Modules folder in your Bannerlord installation location. For Steam users, this is usually here: [code]C:\Program Files (x86)\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules[/code][/li][li]Download the latest version of this mod and drop the folder inside Modules from the archive into your game's [code]Modules[/code] folder.[/li][li]Start the Mount & Blade II: Bannerlord launcher and select all Mod Configuration Menu mods to be loaded.[/li][/ol]
 [spoiler]
 [b]Your Modules folder structure should look something like this:[/b]
 [img]https://cdn.discordapp.com/attachments/753640646253740073/858635739528429568/unknown.png[/img]
