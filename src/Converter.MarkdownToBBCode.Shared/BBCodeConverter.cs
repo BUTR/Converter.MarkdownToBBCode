@@ -1,4 +1,4 @@
-using Markdig;
+﻿using Markdig;
 using Markdig.Extensions.EmphasisExtras;
 using Markdig.Parsers;
 

@@ -1,4 +1,4 @@
-using Converter.MarkdownToBBCode.Shared;
+﻿using Converter.MarkdownToBBCode.Shared;
 
 namespace Converter.MarkdownToBBCodeSteam;
 

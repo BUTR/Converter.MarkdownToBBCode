@@ -1,4 +1,4 @@
-using Converter.MarkdownToBBCodeNM;
+﻿using Converter.MarkdownToBBCodeNM;
 
 namespace Converter.MarkdownToBBCode.Tests.NexusMods;
 
