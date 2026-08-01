@@ -1,4 +1,4 @@
-using Markdig.Syntax;
+﻿using Markdig.Syntax;
 
 namespace Converter.MarkdownToBBCode.Shared;
 
